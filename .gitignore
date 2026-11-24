@@ -1,0 +1,63 @@
+# ==============================================================================
+# FIELD-CART OS (QR Code Engineer) — .gitignore
+# Copyright (c) 2026 NazreenNasyuha. All rights reserved.
+# ==============================================================================
+
+# Internal AI Agent & Living Architecture Docs (DO NOT deploy to GitHub)
+AGENTS.md
+AGENTS.MD
+ARCHITECTURE.md
+ARCHITECTURE.MD
+[Aa][Gg][Ee][Nn][Tt][Ss].[Mm][Dd]
+[Aa][Rr][Cc][Hh][Ii][Tt][Ee][Cc][Tt][Uu][Rr][Ee].[Mm][Dd]
+
+# AI Assistant & Agent Local Config / Scratch Directories
+.agent/
+.antigravity/
+.claude/
+.cursor/
+.gemini/
+.windsurf/
+CLAUDE.md
+GEMINI.md
+
+# Local App Exports, Snapshots & User Backups
+field-cart-backup-*.json
+field-cart-studio-offline.html
+field-cart-*.png
+*.bak
+*.backup
+
+# Secrets, Credentials & Environment Files
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.*
+
+# Logs & Temporary Files
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Operating System Artifacts
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+desktop.ini
+
+# Editor / IDE Workspace Settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

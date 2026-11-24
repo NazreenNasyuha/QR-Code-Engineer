@@ -1,0 +1,4451 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  FIELD-CART OS — Engineer's Handheld & QR Cartridge Studio
+  Copyright (c) 2026 NazreenNasyuha. Licensed under the MIT License.
+  See the LICENSE file in the repository root for full license terms.
+  ============================================================================
+-->
+<html lang="en" data-theme="dark" data-layout="studio">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="author" content="NazreenNasyuha" />
+  <meta name="copyright" content="Copyright (c) 2026 NazreenNasyuha. Licensed under the MIT License." />
+  <meta name="referrer" content="no-referrer" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data: blob:; manifest-src blob: data:; media-src blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';" />
+  <meta name="theme-color" content="#0f1318" id="metaThemeColor" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>FIELD-CART OS // Engineer's Handheld &amp; QR Cartridge Studio</title>
+  <link id="dynamicManifest" rel="manifest" href="" />
+  <style>
+    /* ==========================================================================
+       FIELD-CART OS // INDUSTRIAL HARDWARE & CAD DESIGN TOKENS
+       Copyright (c) 2026 NazreenNasyuha. All rights reserved.
+       Zero external dependencies: pure CSS with system & monospace typography
+       ========================================================================== */
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "Segoe UI Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+      --radius-xs: 4px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 20px;
+
+      --transition-fast: 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      --transition-med: 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    /* DARK LAB THEME (Default) */
+    [data-theme="dark"] {
+      --bg-app: #0c1015;
+      --bg-grid-dot: rgba(148, 163, 184, 0.14);
+      --bg-surface: #141922;
+      --bg-surface-2: #1b222e;
+      --bg-surface-3: #232c3b;
+      --bg-input: #0e131b;
+      --bg-lcd: #0a1014;
+
+      --border-subtle: #263041;
+      --border-strong: #394861;
+      --border-focus: #f59e0b;
+
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --text-inverse: #090d12;
+
+      --accent-amber: #f59e0b;
+      --accent-amber-soft: rgba(245, 158, 11, 0.14);
+      --accent-amber-border: rgba(245, 158, 11, 0.45);
+
+      --accent-cyan: #06b6d4;
+      --accent-cyan-soft: rgba(6, 182, 212, 0.14);
+      --accent-cyan-border: rgba(6, 182, 212, 0.45);
+
+      --accent-emerald: #10b981;
+      --accent-emerald-soft: rgba(16, 185, 129, 0.14);
+      --accent-emerald-border: rgba(16, 185, 129, 0.45);
+
+      --accent-danger: #ef4444;
+      --accent-danger-soft: rgba(239, 68, 68, 0.16);
+      --accent-danger-border: rgba(239, 68, 68, 0.48);
+
+      --shadow-panel: 0 8px 24px rgba(0, 0, 0, 0.36);
+      --shadow-chassis: 0 24px 60px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      --svg-grid: rgba(148, 163, 184, 0.15);
+      --svg-ground: #334155;
+      --svg-pipe-fill: rgba(245, 158, 11, 0.12);
+    }
+
+    /* DAYLIGHT SITE THEME (High-contrast sun-readable field sheet) */
+    [data-theme="daylight"] {
+      --bg-app: #eceee8;
+      --bg-grid-dot: rgba(15, 23, 42, 0.14);
+      --bg-surface: #ffffff;
+      --bg-surface-2: #f4f5f1;
+      --bg-surface-3: #e4e7df;
+      --bg-input: #ffffff;
+      --bg-lcd: #eef3ec;
+
+      --border-subtle: #94a3b8;
+      --border-strong: #1e293b;
+      --border-focus: #b45309;
+
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #526071;
+      --text-inverse: #ffffff;
+
+      --accent-amber: #c25e00;
+      --accent-amber-soft: rgba(194, 94, 0, 0.12);
+      --accent-amber-border: rgba(194, 94, 0, 0.65);
+
+      --accent-cyan: #0369a1;
+      --accent-cyan-soft: rgba(3, 105, 161, 0.11);
+      --accent-cyan-border: rgba(3, 105, 161, 0.6);
+
+      --accent-emerald: #047857;
+      --accent-emerald-soft: rgba(4, 120, 87, 0.12);
+      --accent-emerald-border: rgba(4, 120, 87, 0.6);
+
+      --accent-danger: #b91c1c;
+      --accent-danger-soft: rgba(185, 28, 28, 0.12);
+      --accent-danger-border: rgba(185, 28, 28, 0.65);
+
+      --shadow-panel: 0 3px 0 rgba(15, 23, 42, 0.12);
+      --shadow-chassis: 0 18px 40px rgba(15, 23, 42, 0.22), 0 0 0 2px #1e293b;
+      --svg-grid: rgba(15, 23, 42, 0.14);
+      --svg-ground: #64748b;
+      --svg-pipe-fill: rgba(194, 94, 0, 0.12);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: var(--font-sans);
+      background-color: var(--bg-app);
+      color: var(--text-primary);
+      background-image: radial-gradient(var(--bg-grid-dot) 1px, transparent 1px);
+      background-size: 18px 18px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ==========================================================================
+       TOP UTILITY BAR
+       ========================================================================== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: var(--bg-surface);
+      border-bottom: 2px solid var(--border-strong);
+      padding: 10px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-amber);
+      color: var(--text-inverse);
+      display: grid;
+      place-items: center;
+      font-family: var(--font-mono);
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: -0.5px;
+      border: 2px solid var(--border-strong);
+      flex-shrink: 0;
+      box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-title {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      margin-top: 2px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      background: var(--accent-emerald-soft);
+      color: var(--accent-emerald);
+      border: 1px solid var(--accent-emerald-border);
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      box-shadow: 0 0 6px var(--accent-emerald);
+    }
+
+    .topbar-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .segmented {
+      display: inline-flex;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .segmented button {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      letter-spacing: 0.04em;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 30px;
+    }
+
+    .segmented button:hover {
+      color: var(--text-primary);
+    }
+
+    .segmented button.active {
+      background: var(--accent-amber);
+      color: var(--text-inverse);
+    }
+
+    /* ==========================================================================
+       BUTTONS & INTERACTIVE ELEMENTS
+       ========================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 9px 14px;
+      min-height: 38px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-strong);
+      background: var(--bg-surface-2);
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .btn:hover {
+      border-color: var(--accent-amber);
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-sm {
+      padding: 6px 10px;
+      min-height: 32px;
+      font-size: 11px;
+    }
+
+    .btn-amber {
+      background: var(--accent-amber);
+      color: var(--text-inverse);
+      border-color: var(--border-strong);
+    }
+    .btn-amber:hover {
+      filter: brightness(1.06);
+      border-color: var(--text-primary);
+    }
+
+    .btn-cyan {
+      background: var(--accent-cyan);
+      color: var(--text-inverse);
+      border-color: var(--border-strong);
+    }
+    .btn-cyan:hover {
+      filter: brightness(1.06);
+    }
+
+    .btn-emerald {
+      background: var(--accent-emerald);
+      color: var(--text-inverse);
+      border-color: var(--border-strong);
+    }
+
+    .btn-danger {
+      background: var(--accent-danger-soft);
+      color: var(--accent-danger);
+      border-color: var(--accent-danger-border);
+    }
+    .btn-danger:hover {
+      background: var(--accent-danger);
+      color: #fff;
+      border-color: var(--accent-danger);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--border-subtle);
+    }
+
+    /* ==========================================================================
+       SHELL LAYOUT: STUDIO MODE VS HANDHELD MODE
+       ========================================================================== */
+    .workspace-wrap {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 18px 16px 40px;
+      transition: var(--transition-med);
+    }
+
+    /* STUDIO LAYOUT */
+    [data-layout="studio"] .shell-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    [data-layout="studio"] .handheld-bezel-top,
+    [data-layout="studio"] .handheld-bottom-nav {
+      display: none;
+    }
+
+    /* HANDHELD LAYOUT */
+    [data-layout="handheld"] .workspace-wrap {
+      max-width: 470px;
+      padding: 16px 10px 32px;
+    }
+
+    [data-layout="handheld"] .shell-grid {
+      display: block;
+    }
+
+    [data-layout="handheld"] .studio-dock {
+      display: none;
+    }
+
+    [data-layout="handheld"] .main-device {
+      background: var(--bg-surface);
+      border: 3px solid var(--border-strong);
+      border-radius: 26px;
+      box-shadow: var(--shadow-chassis);
+      overflow: hidden;
+      position: relative;
+    }
+
+    [data-layout="handheld"] .handheld-bezel-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: var(--bg-surface-2);
+      border-bottom: 2px solid var(--border-strong);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+    }
+
+    .bezel-screw {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-strong);
+      background: var(--bg-surface-3);
+      position: relative;
+      display: inline-block;
+    }
+
+    .bezel-screw::after {
+      content: "";
+      position: absolute;
+      inset: 4px 1px;
+      height: 1.5px;
+      background: var(--border-strong);
+      transform: rotate(-35deg);
+    }
+
+    [data-layout="handheld"] .studio-tabs {
+      display: none;
+    }
+
+    [data-layout="handheld"] .tool-viewport {
+      padding: 14px;
+    }
+
+    [data-layout="handheld"] .field-input {
+      font-size: 17px;
+      padding: 12px 12px;
+      min-height: 48px;
+    }
+
+    [data-layout="handheld"] .form-grid-2,
+    [data-layout="handheld"] .form-grid-3,
+    [data-layout="handheld"] .form-grid-4,
+    [data-layout="handheld"] .split-tool-grid {
+      grid-template-columns: 1fr;
+    }
+
+    [data-layout="handheld"] .kpi-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    [data-layout="handheld"] .handheld-bottom-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      padding: 8px;
+      background: var(--bg-surface-2);
+      border-top: 2px solid var(--border-strong);
+      position: sticky;
+      bottom: 0;
+      z-index: 25;
+    }
+
+    .hh-nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 8px 4px;
+      min-height: 54px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-subtle);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .hh-nav-btn.active {
+      background: var(--accent-amber);
+      color: var(--text-inverse);
+      border-color: var(--border-strong);
+    }
+
+    /* ==========================================================================
+       STUDIO NAVIGATION TABS
+       ========================================================================== */
+    .studio-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      min-height: 42px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-strong);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--accent-amber);
+    }
+
+    .tab-btn .tab-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--border-strong);
+    }
+
+    .tab-btn[data-tab="gradient"].active {
+      background: var(--accent-amber-soft);
+      border-color: var(--accent-amber);
+      color: var(--text-primary);
+    }
+    .tab-btn[data-tab="gradient"].active .tab-dot { background: var(--accent-amber); }
+
+    .tab-btn[data-tab="interp"].active {
+      background: var(--accent-cyan-soft);
+      border-color: var(--accent-cyan);
+      color: var(--text-primary);
+    }
+    .tab-btn[data-tab="interp"].active .tab-dot { background: var(--accent-cyan); }
+
+    .tab-btn[data-tab="bench"].active {
+      background: var(--accent-emerald-soft);
+      border-color: var(--accent-emerald);
+      color: var(--text-primary);
+    }
+    .tab-btn[data-tab="bench"].active .tab-dot { background: var(--accent-emerald); }
+
+    .tab-btn[data-tab="cartridges"].active {
+      background: var(--bg-surface-3);
+      border-color: var(--text-primary);
+      color: var(--text-primary);
+    }
+    .tab-btn[data-tab="cartridges"].active .tab-dot { background: var(--text-primary); }
+
+    .tab-count {
+      padding: 1px 6px;
+      border-radius: 999px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      font-size: 10px;
+    }
+
+    /* ==========================================================================
+       CARDS, PANELS, INPUTS & READOUTS
+       ========================================================================== */
+    .panel {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      box-shadow: var(--shadow-panel);
+    }
+
+    .panel + .panel {
+      margin-top: 14px;
+    }
+
+    .panel-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px dashed var(--border-subtle);
+    }
+
+    .panel-title {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+    }
+
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
+    }
+
+    .tag-amber { background: var(--accent-amber-soft); color: var(--accent-amber); border-color: var(--accent-amber-border); }
+    .tag-cyan { background: var(--accent-cyan-soft); color: var(--accent-cyan); border-color: var(--accent-cyan-border); }
+    .tag-emerald { background: var(--accent-emerald-soft); color: var(--accent-emerald); border-color: var(--accent-emerald-border); }
+    .tag-danger { background: var(--accent-danger-soft); color: var(--accent-danger); border-color: var(--accent-danger-border); }
+    .tag-neutral { background: var(--bg-surface-2); color: var(--text-secondary); border-color: var(--border-subtle); }
+
+    .mode-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .mode-pill {
+      padding: 8px 12px;
+      min-height: 36px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-subtle);
+      background: var(--bg-surface-2);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .mode-pill:hover {
+      border-color: var(--border-strong);
+      color: var(--text-primary);
+    }
+
+    .mode-pill.active-amber {
+      background: var(--accent-amber);
+      color: var(--text-inverse);
+      border-color: var(--border-strong);
+    }
+
+    .mode-pill.active-cyan {
+      background: var(--accent-cyan);
+      color: var(--text-inverse);
+      border-color: var(--border-strong);
+    }
+
+    .mode-pill.active-emerald {
+      background: var(--accent-emerald);
+      color: var(--text-inverse);
+      border-color: var(--border-strong);
+    }
+
+    .preset-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .preset-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-right: 4px;
+    }
+
+    .preset-btn {
+      padding: 5px 9px;
+      min-height: 28px;
+      border-radius: 4px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-input);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .preset-btn:hover {
+      border-color: var(--accent-amber);
+      color: var(--accent-amber);
+    }
+
+    /* Form grids */
+    .split-tool-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .form-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .field-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      letter-spacing: 0.03em;
+    }
+
+    .field-unit {
+      color: var(--text-muted);
+      font-size: 10px;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .input-prefix {
+      display: inline-flex;
+      align-items: center;
+      padding: 0 10px;
+      background: var(--bg-surface-3);
+      border: 1.5px solid var(--border-strong);
+      border-right: none;
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-secondary);
+    }
+
+    .field-input {
+      width: 100%;
+      min-width: 0;
+      padding: 10px 12px;
+      min-height: 42px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-strong);
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      transition: var(--transition-fast);
+      outline: none;
+    }
+
+    .input-wrap .input-prefix + .field-input {
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    .field-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px var(--accent-amber-soft);
+    }
+
+    .field-input::placeholder {
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* LCD Output Readouts */
+    .lcd-screen {
+      background: var(--bg-lcd);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      position: relative;
+    }
+
+    .lcd-hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1px dashed var(--border-subtle);
+    }
+
+    .lcd-hero-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    .lcd-hero-val {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--accent-amber);
+    }
+
+    .lcd-hero-val.cyan { color: var(--accent-cyan); }
+    .lcd-hero-val.emerald { color: var(--accent-emerald); }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .kpi-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      min-width: 0;
+    }
+
+    .kpi-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .kpi-val {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-primary);
+      word-break: break-word;
+    }
+
+    /* SVG Diagram Container */
+    .diagram-box {
+      background: var(--bg-lcd);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 10px;
+      overflow: hidden;
+    }
+
+    .diagram-box svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Formula Breakdown Box */
+    .formula-box {
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--accent-cyan);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-top: 12px;
+      overflow-x: auto;
+    }
+
+    .formula-box strong {
+      color: var(--text-primary);
+    }
+
+    /* Tables */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      background: var(--bg-input);
+      max-height: 360px;
+      overflow-y: auto;
+    }
+
+    table.eng-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    table.eng-table th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: var(--bg-surface-3);
+      color: var(--text-secondary);
+      text-align: left;
+      padding: 9px 10px;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-bottom: 1.5px solid var(--border-strong);
+      white-space: nowrap;
+    }
+
+    table.eng-table td {
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    table.eng-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    table.eng-table tr.custom-row {
+      background: var(--accent-cyan-soft);
+    }
+
+    table.eng-table input.cell-input {
+      width: 100%;
+      min-width: 74px;
+      padding: 6px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       QR CARTRIDGE CARDS (TACTILE HARDWARE AESTHETIC)
+       ========================================================================== */
+    .dock-panel {
+      position: sticky;
+      top: 72px;
+    }
+
+    .cartridge-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cartridge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .cart-card {
+      position: relative;
+      background: var(--bg-surface-2);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 12px 12px 10px 16px;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      overflow: hidden;
+    }
+
+    .cart-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      background: var(--accent-amber);
+    }
+
+    .cart-card.type-interp::before,
+    .cart-card.type-chainage::before {
+      background: var(--accent-cyan);
+    }
+
+    .cart-card.type-bench::before {
+      background: var(--accent-emerald);
+    }
+
+    .cart-card:hover {
+      border-color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+
+    .cart-grip {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      display: flex;
+      gap: 2px;
+      opacity: 0.45;
+    }
+
+    .cart-grip span {
+      width: 2px;
+      height: 12px;
+      background: var(--text-muted);
+      border-radius: 1px;
+    }
+
+    .cart-title {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 4px 0 6px;
+      padding-right: 26px;
+      word-break: break-word;
+    }
+
+    .cart-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .cart-metric-pill {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+
+    .cart-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       MODALS & TOAST NOTIFICATIONS (Zero alert/confirm!)
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(5, 8, 13, 0.72);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 520px;
+      max-height: 92vh;
+      overflow-y: auto;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+      padding: 18px;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px dashed var(--border-subtle);
+    }
+
+    .modal-title {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .qr-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border: 2px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin: 12px 0;
+    }
+
+    .qr-stage canvas {
+      max-width: 240px;
+      width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+      display: block;
+    }
+
+    .code-box {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 9px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      word-break: break-all;
+      max-height: 88px;
+      overflow-y: auto;
+    }
+
+    .toast-stack {
+      position: fixed;
+      right: 16px;
+      bottom: 18px;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+      max-width: calc(100vw - 32px);
+    }
+
+    .toast {
+      pointer-events: auto;
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border: 1.5px solid var(--accent-amber);
+      border-left: 5px solid var(--accent-amber);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+      animation: toastIn 200ms ease-out;
+    }
+
+    .toast.cyan { border-color: var(--accent-cyan); }
+    .toast.emerald { border-color: var(--accent-emerald); }
+    .toast.danger { border-color: var(--accent-danger); }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Utility helpers */
+    .hidden { display: none !important; }
+    .flex-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .flex-between { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+    .mt-8 { margin-top: 8px; }
+    .mt-12 { margin-top: 12px; }
+    .mt-16 { margin-top: 16px; }
+    .w-full { width: 100%; }
+
+    .camera-wrap {
+      position: relative;
+      background: #000;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 2px solid var(--accent-cyan);
+      margin: 10px 0;
+    }
+
+    .camera-wrap video {
+      width: 100%;
+      max-height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .app-footer {
+      margin-top: 22px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border-subtle);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1080px) {
+      [data-layout="studio"] .shell-grid {
+        grid-template-columns: 1fr;
+      }
+      .dock-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .split-tool-grid,
+      .form-grid-3,
+      .form-grid-4 {
+        grid-template-columns: 1fr;
+      }
+      .form-grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .topbar {
+        padding: 10px 12px;
+      }
+      .brand-sub {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ========================================================================
+       TOP UTILITY BAR
+       ======================================================================== -->
+  <header class="topbar">
+    <div class="brand-group">
+      <div class="brand-mark" aria-hidden="true">FC</div>
+      <div class="brand-text">
+        <div class="brand-title">
+          <span>FIELD-CART OS</span>
+          <span class="status-badge" id="offlineBadge">
+            <span class="status-dot"></span>
+            <span id="offlineBadgeText">OFFLINE READY // LOCAL</span>
+          </span>
+        </div>
+        <div class="brand-sub">ENGINEER'S HANDHELD &amp; QR CARTRIDGE STUDIO v1.0</div>
+      </div>
+    </div>
+
+    <div class="topbar-controls">
+      <!-- Layout Switcher -->
+      <div class="segmented" role="group" aria-label="Layout Mode">
+        <button type="button" id="btnLayoutStudio" class="active" onclick="setLayoutMode('studio')">STUDIO</button>
+        <button type="button" id="btnLayoutHandheld" onclick="setLayoutMode('handheld')">HANDHELD</button>
+      </div>
+
+      <!-- Theme Switcher -->
+      <div class="segmented" role="group" aria-label="Display Theme">
+        <button type="button" id="btnThemeDark" class="active" onclick="setTheme('dark')">DARK LAB</button>
+        <button type="button" id="btnThemeDaylight" onclick="setTheme('daylight')">DAYLIGHT SITE</button>
+      </div>
+
+      <!-- Offline / Install / Backup Action -->
+      <button type="button" class="btn btn-sm btn-amber" onclick="openOfflineModal()">
+        &#8681; INSTALL / BACKUP
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       MAIN WORKSPACE SHELL
+       ======================================================================== -->
+  <main class="workspace-wrap">
+    <div class="shell-grid">
+      <!-- PRIMARY INSTRUMENT / WORKBENCH COLUMN -->
+      <div class="main-device">
+        <!-- Handheld Chassis Top Bezel (Visible in Handheld Mode) -->
+        <div class="handheld-bezel-top">
+          <span class="bezel-screw"></span>
+          <span>FIELD-CART MK-IV // IP67 FIELD INSTRUMENT</span>
+          <span class="bezel-screw"></span>
+        </div>
+
+        <div class="tool-viewport">
+          <!-- Studio Navigation Tabs -->
+          <nav class="studio-tabs" aria-label="Engineering Tools">
+            <button type="button" class="tab-btn active" data-tab="gradient" onclick="switchTab('gradient')">
+              <span class="tab-dot"></span> 01 GRADIENT &amp; INVERT
+            </button>
+            <button type="button" class="tab-btn" data-tab="interp" onclick="switchTab('interp')">
+              <span class="tab-dot"></span> 02 INTERPOLATION
+            </button>
+            <button type="button" class="tab-btn" data-tab="bench" onclick="switchTab('bench')">
+              <span class="tab-dot"></span> 03 SITE BENCH
+            </button>
+            <button type="button" class="tab-btn" data-tab="cartridges" onclick="switchTab('cartridges')">
+              <span class="tab-dot"></span> 04 QR CARTRIDGE BAY <span class="tab-count" id="tabCartCount">0</span>
+            </button>
+          </nav>
+
+          <!-- ====================================================================
+               TAB 1: GRADIENT & INVERT LEVEL CALCULATOR (BIDIRECTIONAL)
+               ==================================================================== -->
+          <section id="tab-gradient" class="tool-section">
+            <div class="panel">
+              <div class="panel-header">
+                <h2 class="panel-title">
+                  <span class="tag-chip tag-amber">PIPE / DRAIN</span>
+                  GRADIENT &amp; INVERT CALCULATOR
+                </h2>
+                <div class="flex-row">
+                  <button type="button" class="btn btn-sm btn-ghost" onclick="swapGradientIL()" title="Swap IL1 and IL2">&#8646; SWAP IL</button>
+                  <button type="button" class="btn btn-sm btn-amber" onclick="openFlashModal('gradient')">&#9889; FLASH QR CARTRIDGE</button>
+                </div>
+              </div>
+
+              <!-- Bidirectional Solve Mode Selector -->
+              <div class="mode-pills" id="gradModePills">
+                <button type="button" class="mode-pill active-amber" data-gmode="find_grad" onclick="setGradMode('find_grad')">FIND GRADIENT</button>
+                <button type="button" class="mode-pill" data-gmode="find_il2" onclick="setGradMode('find_il2')">FIND IL2 (DOWNSTREAM)</button>
+                <button type="button" class="mode-pill" data-gmode="find_il1" onclick="setGradMode('find_il1')">FIND IL1 (UPSTREAM)</button>
+                <button type="button" class="mode-pill" data-gmode="find_len" onclick="setGradMode('find_len')">FIND LENGTH (L)</button>
+              </div>
+
+              <div class="split-tool-grid">
+                <!-- Left: Inputs -->
+                <div>
+                  <div class="form-grid-2">
+                    <div class="field" id="wrap_g_il1">
+                      <label class="field-label" for="g_il1">
+                        <span>UPSTREAM IL1</span>
+                        <span class="field-unit">m (RL)</span>
+                      </label>
+                      <input type="number" step="0.001" id="g_il1" class="field-input" value="12.450" oninput="calcGradient()" />
+                    </div>
+
+                    <div class="field" id="wrap_g_il2">
+                      <label class="field-label" for="g_il2">
+                        <span>DOWNSTREAM IL2</span>
+                        <span class="field-unit">m (RL)</span>
+                      </label>
+                      <input type="number" step="0.001" id="g_il2" class="field-input" value="12.150" oninput="calcGradient()" />
+                    </div>
+
+                    <div class="field" id="wrap_g_len">
+                      <label class="field-label" for="g_len">
+                        <span>HORIZONTAL LENGTH (L)</span>
+                        <span class="field-unit">m</span>
+                      </label>
+                      <input type="number" step="0.01" min="0" id="g_len" class="field-input" value="45.00" oninput="calcGradient()" />
+                    </div>
+
+                    <!-- Gradient Input (Hidden when solving for Gradient) -->
+                    <div class="field hidden" id="wrap_g_grad">
+                      <label class="field-label" for="g_gradVal">
+                        <span>GRADIENT</span>
+                        <span class="field-unit" id="g_gradUnitLabel">1 : X</span>
+                      </label>
+                      <div class="input-wrap">
+                        <span class="input-prefix" id="g_gradPrefix">1 :</span>
+                        <input type="number" step="any" min="0" id="g_gradVal" class="field-input" value="150" oninput="calcGradient()" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Gradient Unit & Direction Toggles (Shown for IL2 / IL1 / Len modes) -->
+                  <div class="flex-row mt-12 hidden" id="wrap_g_toggles">
+                    <div class="segmented">
+                      <button type="button" id="btnGradUnitRatio" class="active" onclick="setGradUnit('ratio')">1 : X</button>
+                      <button type="button" id="btnGradUnitPct" onclick="setGradUnit('pct')">%</button>
+                    </div>
+                    <div class="segmented" id="wrap_g_dirToggle">
+                      <button type="button" id="btnGradDirFall" class="active" onclick="setGradDir('fall')">&#9660; FALL</button>
+                      <button type="button" id="btnGradDirRise" onclick="setGradDir('rise')">&#9650; RISE</button>
+                    </div>
+                  </div>
+
+                  <!-- Quick Engineering Presets -->
+                  <div class="preset-bar">
+                    <span class="preset-label">PRESETS:</span>
+                    <button type="button" class="preset-btn" onclick="applyGradPreset('ratio', 60)">1:60</button>
+                    <button type="button" class="preset-btn" onclick="applyGradPreset('ratio', 80)">1:80</button>
+                    <button type="button" class="preset-btn" onclick="applyGradPreset('ratio', 100)">1:100</button>
+                    <button type="button" class="preset-btn" onclick="applyGradPreset('ratio', 150)">1:150</button>
+                    <button type="button" class="preset-btn" onclick="applyGradPreset('ratio', 200)">1:200</button>
+                    <button type="button" class="preset-btn" onclick="applyGradPreset('pct', 1)">1%</button>
+                    <button type="button" class="preset-btn" onclick="applyGradPreset('pct', 2)">2%</button>
+                  </div>
+
+                  <!-- Primary LCD Output -->
+                  <div class="lcd-screen mt-12">
+                    <div class="lcd-hero">
+                      <div>
+                        <div class="lcd-hero-label" id="g_outHeroLabel">COMPUTED GRADIENT</div>
+                        <div class="lcd-hero-val" id="g_outHeroVal">1 : 150.0</div>
+                      </div>
+                      <span class="tag-chip tag-emerald" id="g_flowBadge">FALL &#8594;</span>
+                    </div>
+                    <div class="kpi-grid">
+                      <div class="kpi-box">
+                        <div class="kpi-label">RATIO (1:X)</div>
+                        <div class="kpi-val" id="g_outRatio">1 : 150.0</div>
+                      </div>
+                      <div class="kpi-box">
+                        <div class="kpi-label">PERCENT (%)</div>
+                        <div class="kpi-val" id="g_outPct">0.667%</div>
+                      </div>
+                      <div class="kpi-box">
+                        <div class="kpi-label">DECIMAL (m/m)</div>
+                        <div class="kpi-val" id="g_outDec">0.00667</div>
+                      </div>
+                      <div class="kpi-box">
+                        <div class="kpi-label">ANGLE (DEG)</div>
+                        <div class="kpi-val" id="g_outDeg">0.382&deg;</div>
+                      </div>
+                      <div class="kpi-box">
+                        <div class="kpi-label">FALL / RISE &Delta;h</div>
+                        <div class="kpi-val" id="g_outDh">-0.300 m (-300 mm)</div>
+                      </div>
+                      <div class="kpi-box">
+                        <div class="kpi-label">SLOPE LENGTH</div>
+                        <div class="kpi-val" id="g_outSlopeLen">45.001 m</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right: Dynamic SVG Pipe Cross-Section Diagram -->
+                <div>
+                  <div class="diagram-box">
+                    <div class="flex-between" style="margin-bottom:6px;">
+                      <span class="preset-label">LIVE LONGITUDINAL SECTION</span>
+                      <span class="mono" style="font-size:10px; color:var(--text-muted);" id="g_diagStatus">MH-A &rarr; MH-B</span>
+                    </div>
+                    <svg id="gradSvg" viewBox="0 0 460 255" role="img" aria-label="Pipe invert longitudinal cross-section diagram"></svg>
+                  </div>
+                  <div class="formula-box" id="g_formulaBox">
+                    <strong>Formula:</strong> Grade = &Delta;h / L
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====================================================================
+               TAB 2: INTERPOLATION STUDIO (LINEAR + CHAINAGE PROFILE)
+               ==================================================================== -->
+          <section id="tab-interp" class="tool-section hidden">
+            <div class="panel">
+              <div class="panel-header">
+                <h2 class="panel-title">
+                  <span class="tag-chip tag-cyan">SURVEY / LEVELS</span>
+                  INTERPOLATION STUDIO
+                </h2>
+                <div class="flex-row">
+                  <button type="button" class="btn btn-sm btn-cyan" onclick="flashCurrentInterp()">&#9889; FLASH QR CARTRIDGE</button>
+                </div>
+              </div>
+
+              <!-- Sub-mode Pills -->
+              <div class="mode-pills">
+                <button type="button" class="mode-pill active-cyan" id="btnInterpLinear" onclick="setInterpSubMode('linear')">LINEAR INTERPOLATION (X &harr; Y)</button>
+                <button type="button" class="mode-pill" id="btnInterpChainage" onclick="setInterpSubMode('chainage')">CHAINAGE / STATION PROFILE</button>
+              </div>
+
+              <!-- SUB-MODE A: LINEAR INTERPOLATION -->
+              <div id="interpSubLinear">
+                <div class="split-tool-grid">
+                  <div>
+                    <div class="form-grid-2">
+                      <div class="field">
+                        <label class="field-label" for="i_x1"><span>POINT 1 : X1</span><span class="field-unit">dist / var</span></label>
+                        <input type="number" step="any" id="i_x1" class="field-input" value="0" oninput="calcLinearInterp()" />
+                      </div>
+                      <div class="field">
+                        <label class="field-label" for="i_y1"><span>POINT 1 : Y1</span><span class="field-unit">level / val</span></label>
+                        <input type="number" step="any" id="i_y1" class="field-input" value="10.500" oninput="calcLinearInterp()" />
+                      </div>
+                      <div class="field">
+                        <label class="field-label" for="i_x2"><span>POINT 2 : X2</span><span class="field-unit">dist / var</span></label>
+                        <input type="number" step="any" id="i_x2" class="field-input" value="50" oninput="calcLinearInterp()" />
+                      </div>
+                      <div class="field">
+                        <label class="field-label" for="i_y2"><span>POINT 2 : Y2</span><span class="field-unit">level / val</span></label>
+                        <input type="number" step="any" id="i_y2" class="field-input" value="11.750" oninput="calcLinearInterp()" />
+                      </div>
+                    </div>
+
+                    <div class="flex-between mt-12">
+                      <div class="segmented">
+                        <button type="button" id="btnSolveY" class="active" onclick="setInterpSolve('y')">GIVEN X &rarr; FIND Y</button>
+                        <button type="button" id="btnSolveX" onclick="setInterpSolve('x')">GIVEN Y &rarr; FIND X</button>
+                      </div>
+                    </div>
+
+                    <div class="field mt-12">
+                      <label class="field-label" for="i_target">
+                        <span id="i_targetLabel">TARGET X</span>
+                        <span class="field-unit">query value</span>
+                      </label>
+                      <input type="number" step="any" id="i_target" class="field-input" value="18.5" oninput="calcLinearInterp()" />
+                    </div>
+
+                    <!-- LCD Output -->
+                    <div class="lcd-screen mt-12">
+                      <div class="lcd-hero">
+                        <div>
+                          <div class="lcd-hero-label" id="i_outLabel">INTERPOLATED Y</div>
+                          <div class="lcd-hero-val cyan" id="i_outVal">10.963</div>
+                        </div>
+                        <span class="tag-chip tag-cyan" id="i_rangeBadge">IN RANGE</span>
+                      </div>
+                      <div class="kpi-grid">
+                        <div class="kpi-box">
+                          <div class="kpi-label">PROGRESS (%)</div>
+                          <div class="kpi-val" id="i_outProg">37.0%</div>
+                        </div>
+                        <div class="kpi-box">
+                          <div class="kpi-label">RATE (&Delta;Y/&Delta;X)</div>
+                          <div class="kpi-val" id="i_outRate">+0.0250</div>
+                        </div>
+                        <div class="kpi-box">
+                          <div class="kpi-label">SLOPE RATIO</div>
+                          <div class="kpi-val" id="i_outRatio">1 : 40.0</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="formula-box" id="i_formulaBox"></div>
+                  </div>
+
+                  <!-- Live SVG Coordinate Plot -->
+                  <div>
+                    <div class="diagram-box">
+                      <div class="flex-between" style="margin-bottom:6px;">
+                        <span class="preset-label">LIVE COORDINATE PLOT</span>
+                        <span class="mono" style="font-size:10px; color:var(--text-muted);" id="i_plotMeta">P1 &rarr; P2</span>
+                      </div>
+                      <svg id="interpSvg" viewBox="0 0 460 285" role="img" aria-label="Linear interpolation coordinate plot"></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SUB-MODE B: CHAINAGE / STATION LEVEL PROFILE -->
+              <div id="interpSubChainage" class="hidden">
+                <div class="form-grid-4">
+                  <div class="field">
+                    <label class="field-label" for="c_sc"><span>START CH.</span><span class="field-unit">m</span></label>
+                    <input type="number" step="0.1" id="c_sc" class="field-input" value="0" oninput="calcChainageProfile()" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="c_sl"><span>START LEVEL</span><span class="field-unit">m (RL)</span></label>
+                    <input type="number" step="0.001" id="c_sl" class="field-input" value="24.850" oninput="calcChainageProfile()" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="c_ec"><span>END CH.</span><span class="field-unit">m</span></label>
+                    <input type="number" step="0.1" id="c_ec" class="field-input" value="100" oninput="calcChainageProfile()" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="c_el"><span>END LEVEL</span><span class="field-unit">m (RL)</span></label>
+                    <input type="number" step="0.001" id="c_el" class="field-input" value="23.350" oninput="calcChainageProfile()" />
+                  </div>
+                </div>
+
+                <div class="form-grid-2 mt-12">
+                  <div class="field">
+                    <label class="field-label" for="c_iv"><span>INTERVAL</span><span class="field-unit">m</span></label>
+                    <input type="number" step="0.5" min="0.1" id="c_iv" class="field-input" value="20" oninput="calcChainageProfile()" />
+                    <div class="preset-bar">
+                      <span class="preset-label">STEP:</span>
+                      <button type="button" class="preset-btn" onclick="setChainageStep(5)">5m</button>
+                      <button type="button" class="preset-btn" onclick="setChainageStep(10)">10m</button>
+                      <button type="button" class="preset-btn" onclick="setChainageStep(20)">20m</button>
+                      <button type="button" class="preset-btn" onclick="setChainageStep(25)">25m</button>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="c_extra"><span>EXTRA CHAINAGES (OPTIONAL)</span><span class="field-unit">comma separated</span></label>
+                    <input type="text" id="c_extra" class="field-input" placeholder="e.g. 12.5, 37.8, 72.5" value="35, 72.5" oninput="calcChainageProfile()" />
+                  </div>
+                </div>
+
+                <!-- Summary Bar -->
+                <div class="lcd-screen mt-12">
+                  <div class="kpi-grid">
+                    <div class="kpi-box">
+                      <div class="kpi-label">TOTAL RUN</div>
+                      <div class="kpi-val" id="c_sumRun">100.00 m</div>
+                    </div>
+                    <div class="kpi-box">
+                      <div class="kpi-label">GRADE (% / 1:X)</div>
+                      <div class="kpi-val" id="c_sumGrade">-1.500% (1:66.7)</div>
+                    </div>
+                    <div class="kpi-box">
+                      <div class="kpi-label">TOTAL &Delta;h / STATIONS</div>
+                      <div class="kpi-val" id="c_sumDh">-1.500 m (8 pts)</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex-between mt-12">
+                  <span class="preset-label">SETTING-OUT LEVEL TABLE (CYAN = CUSTOM EXTRA STATION)</span>
+                  <button type="button" class="btn btn-sm btn-ghost" onclick="copyChainageCSV()">&#128203; COPY CSV</button>
+                </div>
+
+                <div class="table-wrap mt-8">
+                  <table class="eng-table">
+                    <thead>
+                      <tr>
+                        <th>STATION</th>
+                        <th>CHAINAGE (m)</th>
+                        <th>DIST FROM START</th>
+                        <th>INTERP LEVEL (m)</th>
+                        <th>CUMULATIVE &Delta;h</th>
+                      </tr>
+                    </thead>
+                    <tbody id="chainageTbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====================================================================
+               TAB 3: SITE BENCH (LEVELING HPC + SLOPE/VOLUME CONVERTER)
+               ==================================================================== -->
+          <section id="tab-bench" class="tool-section hidden">
+            <div class="panel">
+              <div class="panel-header">
+                <h2 class="panel-title">
+                  <span class="tag-chip tag-emerald">FIELD COMPANION</span>
+                  SITE BENCH TOOLS
+                </h2>
+                <button type="button" class="btn btn-sm btn-emerald" id="btnFlashBench" onclick="openFlashModal('bench')">&#9889; FLASH LEVELING QR</button>
+              </div>
+
+              <div class="mode-pills">
+                <button type="button" class="mode-pill active-emerald" id="btnBenchLevel" onclick="setBenchSubMode('level')">LEVELING (HPC &amp; CUT/FILL)</button>
+                <button type="button" class="mode-pill" id="btnBenchConvert" onclick="setBenchSubMode('convert')">SLOPE &amp; TRENCH VOLUME</button>
+              </div>
+
+              <!-- SUB-MODE A: LEVELING / HPC & CUT-FILL -->
+              <div id="benchSubLevel">
+                <div class="form-grid-3">
+                  <div class="field">
+                    <label class="field-label" for="l_tbm"><span>TBM / BENCHMARK RL</span><span class="field-unit">m</span></label>
+                    <input type="number" step="0.001" id="l_tbm" class="field-input" value="15.420" oninput="calcLeveling()" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="l_bs"><span>BACKSIGHT (BS)</span><span class="field-unit">m</span></label>
+                    <input type="number" step="0.001" id="l_bs" class="field-input" value="1.345" oninput="calcLeveling()" />
+                  </div>
+                  <div class="lcd-screen" style="padding:10px 12px;">
+                    <div class="lcd-hero-label">HPC (INSTRUMENT HEIGHT)</div>
+                    <div class="lcd-hero-val emerald" style="font-size:24px; margin-top:4px;" id="l_hpcVal">16.765 m</div>
+                  </div>
+                </div>
+
+                <div class="flex-between mt-12">
+                  <div class="flex-row">
+                    <button type="button" class="btn btn-sm btn-emerald" onclick="addLevelRow()">+ ADD READING</button>
+                    <button type="button" class="btn btn-sm btn-ghost" onclick="copyLevelCSV()">&#128203; COPY CSV</button>
+                  </div>
+                  <button type="button" class="btn btn-sm btn-danger" onclick="resetLevelRows()">CLEAR LOG</button>
+                </div>
+
+                <div class="table-wrap mt-8">
+                  <table class="eng-table">
+                    <thead>
+                      <tr>
+                        <th>POINT LABEL</th>
+                        <th>STAFF IS/FS (m)</th>
+                        <th>DESIGN RL (m)</th>
+                        <th>REDUCED RL (m)</th>
+                        <th>CUT / FILL</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody id="levelTbody"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- SUB-MODE B: LINKED SLOPE CONVERTER & TRENCH VOLUME -->
+              <div id="benchSubConvert" class="hidden">
+                <div class="panel-title" style="margin-bottom:10px; font-size:12px;">
+                  <span class="tag-chip tag-emerald">LINKED</span> INSTANT 4-WAY SLOPE CONVERTER
+                </div>
+                <div class="form-grid-4">
+                  <div class="field">
+                    <label class="field-label" for="sc_ratio"><span>RATIO</span><span class="field-unit">1 : X</span></label>
+                    <div class="input-wrap">
+                      <span class="input-prefix">1 :</span>
+                      <input type="number" step="any" id="sc_ratio" class="field-input" value="100" oninput="syncSlope('ratio')" />
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="sc_pct"><span>PERCENT</span><span class="field-unit">%</span></label>
+                    <input type="number" step="any" id="sc_pct" class="field-input" value="1.000" oninput="syncSlope('pct')" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="sc_deg"><span>ANGLE</span><span class="field-unit">deg &deg;</span></label>
+                    <input type="number" step="any" id="sc_deg" class="field-input" value="0.573" oninput="syncSlope('deg')" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="sc_mm"><span>DROP / METER</span><span class="field-unit">mm / m</span></label>
+                    <input type="number" step="any" id="sc_mm" class="field-input" value="10.00" oninput="syncSlope('mm')" />
+                  </div>
+                </div>
+
+                <div class="panel-title mt-16" style="margin-bottom:10px; font-size:12px; padding-top:14px; border-top:1px dashed var(--border-subtle);">
+                  <span class="tag-chip tag-emerald">ESTIMATOR</span> EXCAVATION / CONCRETE VOLUME
+                </div>
+                <div class="form-grid-4">
+                  <div class="field">
+                    <label class="field-label" for="v_len"><span>LENGTH (L)</span><span class="field-unit">m</span></label>
+                    <input type="number" step="0.01" min="0" id="v_len" class="field-input" value="25.00" oninput="calcVolume()" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="v_wid"><span>WIDTH (W)</span><span class="field-unit">m</span></label>
+                    <input type="number" step="0.01" min="0" id="v_wid" class="field-input" value="0.90" oninput="calcVolume()" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="v_dep"><span>DEPTH (D)</span><span class="field-unit">m</span></label>
+                    <input type="number" step="0.01" min="0" id="v_dep" class="field-input" value="1.20" oninput="calcVolume()" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label" for="v_qty"><span>QUANTITY</span><span class="field-unit">nos</span></label>
+                    <input type="number" step="1" min="1" id="v_qty" class="field-input" value="1" oninput="calcVolume()" />
+                  </div>
+                </div>
+
+                <div class="lcd-screen mt-12">
+                  <div class="lcd-hero">
+                    <div>
+                      <div class="lcd-hero-label">NET VOLUME (L &times; W &times; D &times; QTY)</div>
+                      <div class="lcd-hero-val emerald" id="v_outNet">27.000 m&sup3;</div>
+                    </div>
+                    <span class="tag-chip tag-amber" id="v_outWasteBadge">+10% WASTAGE: 29.700 m&sup3;</span>
+                  </div>
+                  <div class="kpi-grid">
+                    <div class="kpi-box">
+                      <div class="kpi-label">PLAN AREA (L&times;W)</div>
+                      <div class="kpi-val" id="v_outArea">22.50 m&sup2;</div>
+                    </div>
+                    <div class="kpi-box">
+                      <div class="kpi-label">SECTION AREA (W&times;D)</div>
+                      <div class="kpi-val" id="v_outSec">1.08 m&sup2;</div>
+                    </div>
+                    <div class="kpi-box">
+                      <div class="kpi-label">SIDEWALL AREA (2LD)</div>
+                      <div class="kpi-val" id="v_outWall">60.00 m&sup2;</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====================================================================
+               TAB 4: FULL QR CARTRIDGE BAY & MANAGER
+               ==================================================================== -->
+          <section id="tab-cartridges" class="tool-section hidden">
+            <div class="panel">
+              <div class="panel-header">
+                <h2 class="panel-title">
+                  <span class="tag-chip tag-neutral">STORAGE BAY</span>
+                  QR CARTRIDGE MANAGER
+                </h2>
+                <div class="flex-row">
+                  <button type="button" class="btn btn-sm btn-cyan" onclick="openLoadScanModal()">&#9635; LOAD / SCAN QR</button>
+                  <button type="button" class="btn btn-sm btn-ghost" onclick="openOfflineModal()">&#8645; JSON BACKUP</button>
+                </div>
+              </div>
+
+              <div class="flex-between" style="margin-bottom:12px;">
+                <div class="mode-pills" style="margin-bottom:0;" id="cartFilterPills">
+                  <button type="button" class="mode-pill active-amber" data-filter="all" onclick="setCartFilter('all')">ALL</button>
+                  <button type="button" class="mode-pill" data-filter="gradient" onclick="setCartFilter('gradient')">GRADIENT</button>
+                  <button type="button" class="mode-pill" data-filter="interp" onclick="setCartFilter('interp')">INTERPOLATION</button>
+                  <button type="button" class="mode-pill" data-filter="bench" onclick="setCartFilter('bench')">SITE BENCH</button>
+                </div>
+                <input type="text" id="cartSearch" class="field-input" style="max-width:220px; min-height:36px; font-size:12px;" placeholder="Filter cartridges..." oninput="renderCartridges()" />
+              </div>
+
+              <div id="bayCartGrid" class="cartridge-grid"></div>
+            </div>
+          </section>
+        </div>
+
+        <!-- HANDHELD BOTTOM THUMB NAVIGATION (Visible in Handheld Mode) -->
+        <nav class="handheld-bottom-nav" aria-label="Handheld Navigation">
+          <button type="button" class="hh-nav-btn active" data-tab="gradient" onclick="switchTab('gradient')">
+            <span style="font-size:16px;">&#9702;</span>
+            <span>GRAD</span>
+          </button>
+          <button type="button" class="hh-nav-btn" data-tab="interp" onclick="switchTab('interp')">
+            <span style="font-size:16px;">&#8776;</span>
+            <span>INTERP</span>
+          </button>
+          <button type="button" class="hh-nav-btn" data-tab="bench" onclick="switchTab('bench')">
+            <span style="font-size:16px;">&#9651;</span>
+            <span>BENCH</span>
+          </button>
+          <button type="button" class="hh-nav-btn" data-tab="cartridges" onclick="switchTab('cartridges')">
+            <span style="font-size:16px;">&#9635;</span>
+            <span>CARTS</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- ======================================================================
+           RIGHT STUDIO CARTRIDGE DOCK (Visible in Studio Mode)
+           ====================================================================== -->
+      <aside class="studio-dock">
+        <div class="panel dock-panel">
+          <div class="panel-header">
+            <h3 class="panel-title">
+              <span class="tag-chip tag-amber">DOCK</span>
+              QR CARTRIDGES
+            </h3>
+            <button type="button" class="btn btn-sm btn-cyan" onclick="openLoadScanModal()">&#9635; LOAD / SCAN</button>
+          </div>
+          <div class="mono" style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">
+            Tap any cartridge to inspect scannable QR card, export PNG, or load inputs.
+          </div>
+          <div id="dockCartList" class="cartridge-list"></div>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="app-footer" aria-label="Application Copyright">
+      <span>&copy; 2026 NazreenNasyuha &middot; MIT License</span>
+      <span>FIELD-CART OS // AIR-GAPPED LOCAL ENGINE (ZERO TELEMETRY)</span>
+    </footer>
+  </main>
+
+  <!-- ========================================================================
+       MODAL 1: FLASH NEW CARTRIDGE
+       ======================================================================== -->
+  <div class="modal-backdrop" id="modalFlash" role="dialog" aria-modal="true" aria-labelledby="modalFlashTitle">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 class="modal-title" id="modalFlashTitle">&#9889; FLASH TO QR CARTRIDGE</h3>
+        <button type="button" class="btn btn-sm btn-ghost" onclick="closeModal('modalFlash')">&#10005;</button>
+      </div>
+      <div class="field">
+        <label class="field-label" for="flashNameInput"><span>CARTRIDGE LABEL / SITE REF</span><span class="field-unit">max 40 chars</span></label>
+        <input type="text" id="flashNameInput" maxlength="40" class="field-input" placeholder="e.g. MH1-MH2 Storm Drain 1:150" />
+      </div>
+      <div class="mt-12">
+        <div class="field-label" style="margin-bottom:5px;">
+          <span>COMPACT QR PAYLOAD PREVIEW</span>
+          <span class="field-unit" id="flashByteCount">0 bytes</span>
+        </div>
+        <div class="code-box" id="flashPayloadPreview"></div>
+      </div>
+      <div class="flex-between mt-16">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('modalFlash')">CANCEL</button>
+        <button type="button" class="btn btn-amber" onclick="confirmFlashCartridge()">&#9889; FLASH &amp; OPEN QR CARD</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 2: CARTRIDGE INSPECTOR & SCANNABLE QR CARD
+       ======================================================================== -->
+  <div class="modal-backdrop" id="modalInspector" role="dialog" aria-modal="true" aria-labelledby="inspTitle">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div>
+          <span class="tag-chip tag-amber" id="inspTypeTag">GRADIENT</span>
+          <h3 class="modal-title mt-8" id="inspTitle">CARTRIDGE TITLE</h3>
+        </div>
+        <button type="button" class="btn btn-sm btn-ghost" onclick="closeModal('modalInspector')">&#10005;</button>
+      </div>
+
+      <div class="cart-metrics" id="inspMetrics"></div>
+
+      <div class="qr-stage">
+        <canvas id="qrCanvas" width="320" height="320"></canvas>
+        <div class="mono" style="font-size:10px; color:#334155; margin-top:8px; font-weight:700;" id="inspQrMeta">
+          ISO/IEC 18004 // V4 EC-M // 100% OFFLINE SCANNABLE
+        </div>
+      </div>
+
+      <div class="field-label" style="margin-bottom:4px;">
+        <span>CARTRIDGE CODE</span>
+        <span class="field-unit" id="inspTimestamp"></span>
+      </div>
+      <div class="code-box" id="inspCodeText"></div>
+
+      <div class="flex-row mt-12">
+        <button type="button" class="btn btn-amber" style="flex:1;" onclick="loadInspectedCartridge()">&#8634; LOAD INTO CALCULATOR</button>
+        <button type="button" class="btn btn-cyan" style="flex:1;" onclick="downloadQRCardPNG()">&#8681; DOWNLOAD QR CARD (PNG)</button>
+      </div>
+      <div class="flex-between mt-8">
+        <button type="button" class="btn btn-sm btn-ghost" onclick="copyInspectedCode()">&#128203; COPY CODE</button>
+        <button type="button" class="btn btn-sm btn-danger" id="btnInspDelete" onclick="deleteInspectedCartridge()">DELETE CARTRIDGE</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 3: LOAD / SCAN CARTRIDGE
+       ======================================================================== -->
+  <div class="modal-backdrop" id="modalLoadScan" role="dialog" aria-modal="true" aria-labelledby="loadScanTitle">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 class="modal-title" id="loadScanTitle">&#9635; LOAD / SCAN QR CARTRIDGE</h3>
+        <button type="button" class="btn btn-sm btn-ghost" onclick="closeLoadScanModal()">&#10005;</button>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="pasteCodeInput"><span>PASTE CARTRIDGE CODE (FC1|... OR JSON)</span></label>
+        <textarea id="pasteCodeInput" rows="3" class="field-input" style="font-size:12px; min-height:76px; resize:vertical;" placeholder="FC1|G|MH1-MH2 Storm Drain|..."></textarea>
+      </div>
+
+      <div class="flex-row mt-12">
+        <button type="button" class="btn btn-amber" style="flex:1;" onclick="decodeAndLoadPasted(false)">LOAD INTO CALCULATOR</button>
+        <button type="button" class="btn btn-emerald" style="flex:1;" onclick="decodeAndLoadPasted(true)">SAVE &amp; LOAD</button>
+      </div>
+
+      <div style="margin-top:16px; padding-top:14px; border-top:1px dashed var(--border-subtle);">
+        <div class="flex-between">
+          <span class="field-label">OPTICAL CAMERA SCANNER</span>
+          <button type="button" class="btn btn-sm btn-cyan" id="btnToggleCam" onclick="toggleCameraScanner()">&#128247; START CAMERA SCAN</button>
+        </div>
+        <div class="mono mt-8" style="font-size:11px; color:var(--text-muted);" id="camStatusText">
+          Uses native browser BarcodeDetector API (offline). Point camera at any FIELD-CART QR Card.
+        </div>
+        <div class="camera-wrap hidden" id="cameraWrap">
+          <video id="camVideo" playsinline muted></video>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 4: OFFLINE PWA / INSTALL & JSON BACKUP
+       ======================================================================== -->
+  <div class="modal-backdrop" id="modalOffline" role="dialog" aria-modal="true" aria-labelledby="offlineModalTitle">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 class="modal-title" id="offlineModalTitle">&#8681; OFFLINE STUDIO &amp; DATA BACKUP</h3>
+        <button type="button" class="btn btn-sm btn-ghost" onclick="closeModal('modalOffline')">&#10005;</button>
+      </div>
+
+      <div class="lcd-screen">
+        <div class="lcd-hero-label">100% SELF-CONTAINED SINGLE-FILE ARCHITECTURE</div>
+        <p class="mono" style="font-size:12px; color:var(--text-secondary); margin:8px 0 0; line-height:1.5;">
+          Zero external CDNs. Pure-JS ISO/IEC 18004 QR engine included. Download this standalone HTML file to your phone or laptop and open it anytime in Airplane Mode.
+        </p>
+      </div>
+
+      <div class="flex-row mt-12">
+        <button type="button" class="btn btn-amber w-full" onclick="downloadStandaloneHTML()">&#8681; DOWNLOAD STANDALONE OFFLINE HTML</button>
+      </div>
+
+      <div style="margin-top:16px; padding-top:14px; border-top:1px dashed var(--border-subtle);">
+        <div class="field-label" style="margin-bottom:8px;"><span>CARTRIDGE LIBRARY BACKUP (JSON)</span></div>
+        <div class="flex-row">
+          <button type="button" class="btn btn-cyan" style="flex:1;" onclick="exportCartridgesJSON()">&#8681; EXPORT JSON</button>
+          <button type="button" class="btn btn-ghost" style="flex:1;" onclick="document.getElementById('importJsonFile').click()">&#8679; IMPORT JSON FILE</button>
+          <input type="file" id="importJsonFile" accept=".json,application/json" class="hidden" onchange="importCartridgesJSON(event)" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION STACK -->
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <!-- ========================================================================
+       COMPLETE APPLICATION SCRIPT (PURE JAVASCRIPT — ZERO EXTERNAL DEPENDENCIES)
+       Copyright (c) 2026 NazreenNasyuha. All rights reserved.
+       ======================================================================== -->
+  <script>
+    'use strict';
+
+    /* ========================================================================
+       PART 1: PURE-JS SPEC-COMPLIANT QR CODE ENCODER (ISO/IEC 18004)
+       Supports: Versions 1–10, Byte Mode (UTF-8), EC Level M & L,
+                 Reed-Solomon GF(256), All 8 Mask Patterns + 4 ISO Penalties.
+       ======================================================================== */
+    const PureQR = (function () {
+      // Precompute GF(256) exp and log tables with primitive polynomial 0x11D
+      const GF_EXP = new Uint8Array(512);
+      const GF_LOG = new Uint8Array(256);
+      (function initGF() {
+        let v = 1;
+        for (let i = 0; i < 255; i++) {
+          GF_EXP[i] = v;
+          GF_LOG[v] = i;
+          v <<= 1;
+          if (v & 0x100) v ^= 0x11d;
+        }
+        for (let i = 255; i < 512; i++) {
+          GF_EXP[i] = GF_EXP[i - 255];
+        }
+      })();
+
+      function gfMul(a, b) {
+        if (a === 0 || b === 0) return 0;
+        return GF_EXP[GF_LOG[a] + GF_LOG[b]];
+      }
+
+      // Build Reed-Solomon generator polynomial of given degree
+      function rsGeneratorPoly(degree) {
+        let poly = [1];
+        for (let i = 0; i < degree; i++) {
+          const next = new Array(poly.length + 1).fill(0);
+          const root = GF_EXP[i];
+          for (let j = 0; j < poly.length; j++) {
+            next[j] ^= poly[j];
+            next[j + 1] ^= gfMul(poly[j], root);
+          }
+          poly = next;
+        }
+        return poly;
+      }
+
+      // Compute Reed-Solomon remainder bytes for a data block
+      function rsComputeEC(data, ecCount) {
+        const gen = rsGeneratorPoly(ecCount);
+        const rem = new Uint8Array(ecCount);
+        for (let i = 0; i < data.length; i++) {
+          const factor = data[i] ^ rem[0];
+          for (let j = 0; j < ecCount - 1; j++) {
+            rem[j] = rem[j + 1];
+          }
+          rem[ecCount - 1] = 0;
+          if (factor !== 0) {
+            for (let j = 0; j < ecCount; j++) {
+              rem[j] ^= gfMul(gen[j + 1], factor);
+            }
+          }
+        }
+        return rem;
+      }
+
+      // ISO/IEC 18004 Version Tables (V1 to V10)
+      // Format: [ecPerBlock, g1Blocks, g1Data, g2Blocks, g2Data]
+      const VERSION_TABLE = {
+        M: [
+          null,
+          [10, 1, 16, 0, 0],  // V1: 16 data
+          [16, 1, 28, 0, 0],  // V2: 28 data
+          [26, 1, 44, 0, 0],  // V3: 44 data
+          [18, 2, 32, 0, 0],  // V4: 64 data
+          [24, 2, 43, 0, 0],  // V5: 86 data
+          [16, 4, 27, 0, 0],  // V6: 108 data
+          [18, 4, 31, 0, 0],  // V7: 124 data
+          [22, 2, 38, 2, 39], // V8: 154 data
+          [22, 3, 36, 2, 37], // V9: 182 data
+          [26, 4, 43, 1, 44]  // V10: 216 data
+        ],
+        L: [
+          null,
+          [7,  1, 19, 0, 0],  // V1: 19 data
+          [10, 1, 34, 0, 0],  // V2: 34 data
+          [15, 1, 55, 0, 0],  // V3: 55 data
+          [20, 1, 80, 0, 0],  // V4: 80 data
+          [26, 1, 108, 0, 0], // V5: 108 data
+          [18, 2, 68, 0, 0],  // V6: 136 data
+          [20, 2, 78, 0, 0],  // V7: 156 data
+          [24, 2, 97, 0, 0],  // V8: 194 data
+          [30, 2, 116, 0, 0], // V9: 232 data
+          [18, 2, 68, 2, 69]  // V10: 274 data
+        ]
+      };
+
+      // Alignment pattern center positions for Versions 1–10
+      const ALIGN_COORDS = [
+        [],
+        [],
+        [6, 18],
+        [6, 22],
+        [6, 26],
+        [6, 30],
+        [6, 34],
+        [6, 22, 38],
+        [6, 24, 42],
+        [6, 26, 46],
+        [6, 28, 50]
+      ];
+
+      // Convert string to UTF-8 byte array
+      function toUTF8Bytes(str) {
+        if (typeof TextEncoder !== 'undefined') {
+          return Array.from(new TextEncoder().encode(str));
+        }
+        const bytes = [];
+        for (let i = 0; i < str.length; i++) {
+          let c = str.charCodeAt(i);
+          if (c < 0x80) bytes.push(c);
+          else if (c < 0x800) bytes.push(0xc0 | (c >> 6), 0x80 | (c & 0x3f));
+          else bytes.push(0xe0 | (c >> 12), 0x80 | ((c >> 6) & 0x3f), 0x80 | (c & 0x3f));
+        }
+        return bytes;
+      }
+
+      // Compute 15-bit BCH(15,5) format string masked with 0x5412
+      function getFormatBits(ecLevel, mask) {
+        const ecIndicator = ecLevel === 'L' ? 1 : 0; // L=01, M=00
+        const data = (ecIndicator << 3) | mask;
+        let rem = data << 10;
+        for (let i = 14; i >= 10; i--) {
+          if (rem & (1 << i)) rem ^= 0x537 << (i - 10);
+        }
+        return ((data << 10) | rem) ^ 0x5412;
+      }
+
+      // Compute 18-bit BCH(18,6) version info for versions 7–10
+      function getVersionBits(version) {
+        let rem = version << 12;
+        for (let i = 17; i >= 12; i--) {
+          if (rem & (1 << i)) rem ^= 0x1f25 << (i - 12);
+        }
+        return (version << 12) | rem;
+      }
+
+      // Select smallest version (1–10) that fits byte payload (prefers EC M, falls back to L)
+      function selectVersionAndEC(byteLen, preferredEC) {
+        const levels = preferredEC === 'L' ? ['L'] : ['M', 'L'];
+        for (const ec of levels) {
+          for (let v = 1; v <= 10; v++) {
+            const spec = VERSION_TABLE[ec][v];
+            const totalDataBytes = spec[1] * spec[2] + spec[3] * spec[4];
+            const countBits = v <= 9 ? 8 : 16;
+            const totalBits = totalDataBytes * 8;
+            const neededBits = 4 + countBits + byteLen * 8;
+            if (neededBits <= totalBits) {
+              return { version: v, ecLevel: ec, spec, totalDataBytes };
+            }
+          }
+        }
+        throw new Error('Payload exceeds QR Version 10 capacity (271 bytes).');
+      }
+
+      // Encode data bytes + RS error correction and interleave blocks
+      function buildCodewords(bytes, version, spec, totalDataBytes) {
+        const bitBuf = [];
+        function pushBits(val, len) {
+          for (let i = len - 1; i >= 0; i--) {
+            bitBuf.push((val >> i) & 1);
+          }
+        }
+
+        // Byte mode indicator (0100) + character count
+        pushBits(0b0100, 4);
+        pushBits(bytes.length, version <= 9 ? 8 : 16);
+        for (let i = 0; i < bytes.length; i++) {
+          pushBits(bytes[i], 8);
+        }
+
+        // Terminator (up to 4 zeros)
+        const maxBits = totalDataBytes * 8;
+        const termLen = Math.min(4, maxBits - bitBuf.length);
+        pushBits(0, termLen);
+
+        // Pad to byte boundary
+        while (bitBuf.length % 8 !== 0) bitBuf.push(0);
+
+        // Pack into data bytes
+        const dataCodewords = new Uint8Array(totalDataBytes);
+        let idx = 0;
+        for (let i = 0; i < bitBuf.length; i += 8) {
+          let b = 0;
+          for (let k = 0; k < 8; k++) b = (b << 1) | bitBuf[i + k];
+          dataCodewords[idx++] = b;
+        }
+
+        // Pad remaining capacity with alternating 0xEC and 0x11
+        let padToggle = true;
+        while (idx < totalDataBytes) {
+          dataCodewords[idx++] = padToggle ? 0xec : 0x11;
+          padToggle = !padToggle;
+        }
+
+        // Split into blocks and calculate RS EC bytes
+        const [ecPerBlock, g1Count, g1Data, g2Count, g2Data] = spec;
+        const dataBlocks = [];
+        const ecBlocks = [];
+        let offset = 0;
+
+        for (let b = 0; b < g1Count; b++) {
+          const blk = dataCodewords.slice(offset, offset + g1Data);
+          offset += g1Data;
+          dataBlocks.push(blk);
+          ecBlocks.push(rsComputeEC(blk, ecPerBlock));
+        }
+        for (let b = 0; b < g2Count; b++) {
+          const blk = dataCodewords.slice(offset, offset + g2Data);
+          offset += g2Data;
+          dataBlocks.push(blk);
+          ecBlocks.push(rsComputeEC(blk, ecPerBlock));
+        }
+
+        // Interleave data codewords, then EC codewords
+        const finalBytes = [];
+        const maxDataBlockLen = Math.max(g1Data, g2Data);
+        for (let i = 0; i < maxDataBlockLen; i++) {
+          for (let b = 0; b < dataBlocks.length; b++) {
+            if (i < dataBlocks[b].length) finalBytes.push(dataBlocks[b][i]);
+          }
+        }
+        for (let i = 0; i < ecPerBlock; i++) {
+          for (let b = 0; b < ecBlocks.length; b++) {
+            finalBytes.push(ecBlocks[b][i]);
+          }
+        }
+        return finalBytes;
+      }
+
+      // Draw function patterns onto base matrix and mark function cells
+      function buildFunctionMatrix(version) {
+        const size = version * 4 + 17;
+        const modules = Array.from({ length: size }, () => new Uint8Array(size));
+        const isFunc = Array.from({ length: size }, () => new Uint8Array(size));
+
+        function setFunc(r, c, val) {
+          if (r >= 0 && r < size && c >= 0 && c < size) {
+            modules[r][c] = val ? 1 : 0;
+            isFunc[r][c] = 1;
+          }
+        }
+
+        // Finder pattern + white separator
+        function drawFinder(top, left) {
+          for (let dr = -1; dr <= 7; dr++) {
+            for (let dc = -1; dc <= 7; dc++) {
+              const r = top + dr;
+              const c = left + dc;
+              if (r < 0 || r >= size || c < 0 || c >= size) continue;
+              const inOuter = dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6;
+              const isBorder = dr === 0 || dr === 6 || dc === 0 || dc === 6;
+              const inInner = dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4;
+              setFunc(r, c, inOuter && (isBorder || inInner));
+            }
+          }
+        }
+
+        drawFinder(0, 0);
+        drawFinder(0, size - 7);
+        drawFinder(size - 7, 0);
+
+        // Timing patterns
+        for (let i = 8; i < size - 8; i++) {
+          setFunc(6, i, i % 2 === 0);
+          setFunc(i, 6, i % 2 === 0);
+        }
+
+        // Alignment patterns (V2–V10)
+        const coords = ALIGN_COORDS[version];
+        for (let i = 0; i < coords.length; i++) {
+          for (let j = 0; j < coords.length; j++) {
+            const cr = coords[i];
+            const cc = coords[j];
+            // Skip finder overlaps
+            if ((cr === 6 && cc === 6) ||
+                (cr === 6 && cc === coords[coords.length - 1]) ||
+                (cr === coords[coords.length - 1] && cc === 6)) {
+              continue;
+            }
+            for (let dr = -2; dr <= 2; dr++) {
+              for (let dc = -2; dc <= 2; dc++) {
+                const dist = Math.max(Math.abs(dr), Math.abs(dc));
+                setFunc(cr + dr, cc + dc, dist !== 1);
+              }
+            }
+          }
+        }
+
+        // Reserve Format Info areas + fixed Dark Module
+        for (let i = 0; i <= 8; i++) {
+          if (i !== 6) {
+            isFunc[8][i] = 1;
+            isFunc[i][8] = 1;
+          }
+        }
+        for (let i = size - 8; i < size; i++) {
+          isFunc[8][i] = 1;
+          isFunc[i][8] = 1;
+        }
+        setFunc(size - 8, 8, 1); // Fixed Dark Module
+
+        // Version Info (V7–V10)
+        if (version >= 7) {
+          const vBits = getVersionBits(version);
+          for (let i = 0; i < 18; i++) {
+            const bit = (vBits >> i) & 1;
+            const r = Math.floor(i / 3);
+            const c = size - 11 + (i % 3);
+            setFunc(r, c, bit);
+            setFunc(c, r, bit);
+          }
+        }
+
+        return { size, modules, isFunc };
+      }
+
+      // Place codeword bits in standard zigzag order
+      function placeDataBits(modules, isFunc, size, codewords) {
+        let bitIndex = 0;
+        const totalBits = codewords.length * 8;
+        let upward = true;
+
+        for (let col = size - 1; col >= 1; col -= 2) {
+          if (col === 6) col = 5; // Skip vertical timing line
+          for (let step = 0; step < size; step++) {
+            const row = upward ? (size - 1 - step) : step;
+            for (let dx = 0; dx < 2; dx++) {
+              const c = col - dx;
+              if (!isFunc[row][c]) {
+                let bit = 0;
+                if (bitIndex < totalBits) {
+                  bit = (codewords[bitIndex >> 3] >> (7 - (bitIndex & 7))) & 1;
+                  bitIndex++;
+                }
+                modules[row][c] = bit;
+              }
+            }
+          }
+          upward = !upward;
+        }
+      }
+
+      // Write 15-bit format information around finders
+      function writeFormatInfo(modules, size, ecLevel, mask) {
+        const fmt = getFormatBits(ecLevel, mask);
+        // Copy 1 (top-left)
+        const tlCoords = [
+          [8, 0], [8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 7], [8, 8],
+          [7, 8], [5, 8], [4, 8], [3, 8], [2, 8], [1, 8], [0, 8]
+        ];
+        for (let i = 0; i < 15; i++) {
+          const bit = (fmt >> (14 - i)) & 1;
+          modules[tlCoords[i][0]][tlCoords[i][1]] = bit;
+        }
+        // Copy 2 (bottom-left vertical + top-right horizontal)
+        for (let i = 0; i < 7; i++) {
+          modules[size - 1 - i][8] = (fmt >> (14 - i)) & 1;
+        }
+        for (let i = 0; i < 8; i++) {
+          modules[8][size - 8 + i] = (fmt >> (7 - i)) & 1;
+        }
+      }
+
+      function maskPredicate(mask, r, c) {
+        switch (mask) {
+          case 0: return (r + c) % 2 === 0;
+          case 1: return r % 2 === 0;
+          case 2: return c % 3 === 0;
+          case 3: return (r + c) % 3 === 0;
+          case 4: return (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0;
+          case 5: return ((r * c) % 2) + ((r * c) % 3) === 0;
+          case 6: return (((r * c) % 2) + ((r * c) % 3)) % 2 === 0;
+          case 7: return (((r + c) % 2) + ((r * c) % 3)) % 2 === 0;
+          default: return false;
+        }
+      }
+
+      // ISO/IEC 18004 Mask Penalty Evaluation (4 rules)
+      function evaluatePenalty(mat, size) {
+        let penalty = 0;
+
+        // Rule 1: 5+ consecutive same-color modules in rows & cols
+        for (let r = 0; r < size; r++) {
+          let runColor = mat[r][0], runLen = 1;
+          for (let c = 1; c < size; c++) {
+            if (mat[r][c] === runColor) {
+              runLen++;
+            } else {
+              if (runLen >= 5) penalty += 3 + (runLen - 5);
+              runColor = mat[r][c];
+              runLen = 1;
+            }
+          }
+          if (runLen >= 5) penalty += 3 + (runLen - 5);
+        }
+        for (let c = 0; c < size; c++) {
+          let runColor = mat[0][c], runLen = 1;
+          for (let r = 1; r < size; r++) {
+            if (mat[r][c] === runColor) {
+              runLen++;
+            } else {
+              if (runLen >= 5) penalty += 3 + (runLen - 5);
+              runColor = mat[r][c];
+              runLen = 1;
+            }
+          }
+          if (runLen >= 5) penalty += 3 + (runLen - 5);
+        }
+
+        // Rule 2: 2x2 blocks of same color
+        for (let r = 0; r < size - 1; r++) {
+          for (let c = 0; c < size - 1; c++) {
+            const v = mat[r][c];
+            if (v === mat[r][c + 1] && v === mat[r + 1][c] && v === mat[r + 1][c + 1]) {
+              penalty += 3;
+            }
+          }
+        }
+
+        // Rule 3: Finder-like 1:1:3:1:1 patterns with 4-light guard
+        function checkLineFinder(arr) {
+          let hits = 0;
+          for (let i = 0; i <= arr.length - 11; i++) {
+            if (arr[i]===1 && arr[i+1]===0 && arr[i+2]===1 && arr[i+3]===1 && arr[i+4]===1 && arr[i+5]===0 && arr[i+6]===1 &&
+                arr[i+7]===0 && arr[i+8]===0 && arr[i+9]===0 && arr[i+10]===0) hits++;
+            if (arr[i]===0 && arr[i+1]===0 && arr[i+2]===0 && arr[i+3]===0 &&
+                arr[i+4]===1 && arr[i+5]===0 && arr[i+6]===1 && arr[i+7]===1 && arr[i+8]===1 && arr[i+9]===0 && arr[i+10]===1) hits++;
+          }
+          return hits * 40;
+        }
+        for (let r = 0; r < size; r++) penalty += checkLineFinder(mat[r]);
+        const colBuf = new Uint8Array(size);
+        for (let c = 0; c < size; c++) {
+          for (let r = 0; r < size; r++) colBuf[r] = mat[r][c];
+          penalty += checkLineFinder(colBuf);
+        }
+
+        // Rule 4: Dark/Light ratio balance
+        let dark = 0;
+        for (let r = 0; r < size; r++) {
+          for (let c = 0; c < size; c++) if (mat[r][c]) dark++;
+        }
+        const pct = (dark * 100) / (size * size);
+        const k = Math.floor(Math.abs(pct - 50) / 5);
+        penalty += k * 10;
+
+        return penalty;
+      }
+
+      // Main Public Encoder API
+      function encode(text, preferredEC = 'M') {
+        const bytes = toUTF8Bytes(text);
+        const { version, ecLevel, spec, totalDataBytes } = selectVersionAndEC(bytes.length, preferredEC);
+        const codewords = buildCodewords(bytes, version, spec, totalDataBytes);
+        const { size, modules, isFunc } = buildFunctionMatrix(version);
+        placeDataBits(modules, isFunc, size, codewords);
+
+        let bestMask = 0;
+        let bestPenalty = Infinity;
+        let bestMatrix = null;
+
+        for (let mask = 0; mask < 8; mask++) {
+          const cand = modules.map(row => new Uint8Array(row));
+          for (let r = 0; r < size; r++) {
+            for (let c = 0; c < size; c++) {
+              if (!isFunc[r][c] && maskPredicate(mask, r, c)) {
+                cand[r][c] ^= 1;
+              }
+            }
+          }
+          writeFormatInfo(cand, size, ecLevel, mask);
+          const pen = evaluatePenalty(cand, size);
+          if (pen < bestPenalty) {
+            bestPenalty = pen;
+            bestMask = mask;
+            bestMatrix = cand;
+          }
+        }
+
+        return {
+          version,
+          ecLevel,
+          mask: bestMask,
+          size,
+          byteLength: bytes.length,
+          matrix: bestMatrix
+        };
+      }
+
+      // Render QR matrix cleanly onto a canvas with 4-module quiet zone
+      function renderToCanvas(canvas, qr, pixelSize = 320, darkColor = '#0b0f17', lightColor = '#ffffff') {
+        const quiet = 4;
+        const totalMods = qr.size + quiet * 2;
+        const scale = Math.max(2, Math.floor(pixelSize / totalMods));
+        const finalPx = totalMods * scale;
+        canvas.width = finalPx;
+        canvas.height = finalPx;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = lightColor;
+        ctx.fillRect(0, 0, finalPx, finalPx);
+        ctx.fillStyle = darkColor;
+        for (let r = 0; r < qr.size; r++) {
+          for (let c = 0; c < qr.size; c++) {
+            if (qr.matrix[r][c]) {
+              ctx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+            }
+          }
+        }
+        return { finalPx, scale };
+      }
+
+      return { encode, renderToCanvas };
+    })();
+
+    /* ========================================================================
+       PART 2: APPLICATION STATE & LOCAL STORAGE MANAGEMENT
+       ======================================================================== */
+    const STORAGE_KEY = 'field_cart_os_cartridges_v1';
+    const PREFS_KEY = 'field_cart_os_prefs_v1';
+    const ALLOWED_CART_TYPES = new Set(['gradient', 'interp', 'chainage', 'bench']);
+    const ALLOWED_GRAD_MODES = new Set(['find_grad', 'find_il2', 'find_il1', 'find_len']);
+    const MAX_CARTRIDGES = 500;
+    const MAX_IMPORT_BYTES = 2 * 1024 * 1024; // 2 MB import safety limit
+    const MAX_IMPORT_ITEMS = 200;
+    const MAX_BENCH_ROWS = 100;
+    const QR_MAX_BYTES_M = 216;
+    const QR_MAX_BYTES_L = 271;
+
+    const state = {
+      activeTab: 'gradient',
+      layout: 'studio',
+      theme: 'dark',
+      // Gradient state
+      gradMode: 'find_grad',   // find_grad | find_il2 | find_il1 | find_len
+      gradUnit: 'ratio',       // ratio | pct
+      gradDir: 'fall',         // fall | rise
+      // Interpolation state
+      interpSubMode: 'linear', // linear | chainage
+      interpSolve: 'y',        // y | x
+      lastChainageRows: [],
+      // Site Bench state
+      benchSubMode: 'level',   // level | convert
+      levelRows: [
+        { label: 'PAD-NW', staff: '1.520', design: '15.250' },
+        { label: 'PAD-NE', staff: '1.485', design: '15.250' },
+        { label: 'PAD-SW', staff: '1.560', design: '15.250' },
+        { label: 'PAD-SE', staff: '1.515', design: '15.250' }
+      ],
+      // Cartridges
+      cartridges: [],
+      cartFilter: 'all',
+      pendingFlashTool: null,
+      inspectedCartId: null,
+      deleteArmedId: null,
+      // Camera scanner state
+      camStream: null,
+      camScanLoopId: null
+    };
+
+    // Pre-seeded realistic example cartridges for first load
+    function getSeedCartridges() {
+      const now = Date.now();
+      return [
+        {
+          id: 'seed-drain-150',
+          type: 'gradient',
+          name: 'MH1-MH2 Storm Drain 1:150',
+          createdAt: now - 3600 * 1000 * 5,
+          summary: ['IL1 12.450m', 'IL2 12.150m', 'L 45.0m', '1:150 FALL'],
+          payload: {
+            tool: 'gradient',
+            mode: 'find_grad',
+            il1: 12.45,
+            il2: 12.15,
+            len: 45,
+            gradVal: 150,
+            gradUnit: 'ratio',
+            gradDir: 'fall'
+          }
+        },
+        {
+          id: 'seed-road-ch',
+          type: 'chainage',
+          name: 'Road Ch 0+000 to 0+100',
+          createdAt: now - 3600 * 1000 * 2,
+          summary: ['0+000 → 0+100', '24.850 → 23.350m', 'Step 20m', '-1.50%'],
+          payload: {
+            tool: 'chainage',
+            sc: 0,
+            sl: 24.85,
+            ec: 100,
+            el: 23.35,
+            iv: 20,
+            ex: '35,72.5'
+          }
+        }
+      ];
+    }
+
+    function loadStorage() {
+      try {
+        const rawPrefs = localStorage.getItem(PREFS_KEY);
+        if (rawPrefs) {
+          const prefs = JSON.parse(rawPrefs);
+          if (prefs.theme === 'dark' || prefs.theme === 'daylight') state.theme = prefs.theme;
+          if (prefs.layout === 'studio' || prefs.layout === 'handheld') state.layout = prefs.layout;
+        } else if (window.innerWidth < 600) {
+          // Default to handheld feel on narrow phones
+          state.layout = 'handheld';
+        }
+        const rawCarts = localStorage.getItem(STORAGE_KEY);
+        if (rawCarts) {
+          const parsed = JSON.parse(rawCarts);
+          const validCarts = Array.isArray(parsed)
+            ? parsed.map(item => sanitizeCartridge(item)).filter(Boolean).slice(0, MAX_CARTRIDGES)
+            : [];
+          state.cartridges = validCarts.length > 0 ? validCarts : getSeedCartridges();
+        } else {
+          state.cartridges = getSeedCartridges();
+          saveCartridges();
+        }
+      } catch (e) {
+        state.cartridges = getSeedCartridges();
+      }
+    }
+
+    function saveCartridges() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.cartridges));
+      } catch (e) {
+        showToast('Local storage full or unavailable.', 'danger');
+      }
+    }
+
+    function savePrefs() {
+      try {
+        localStorage.setItem(PREFS_KEY, JSON.stringify({ theme: state.theme, layout: state.layout }));
+      } catch (e) {}
+    }
+
+    /* ========================================================================
+       PART 3: UI HELPERS (TOASTS, CLIPBOARD, LAYOUT, THEME, PWA MANIFEST)
+       ======================================================================== */
+    function showToast(msg, tone = 'amber') {
+      const stack = document.getElementById('toastStack');
+      const el = document.createElement('div');
+      el.className = 'toast ' + tone;
+      el.textContent = msg;
+      stack.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(6px)';
+        el.style.transition = '180ms ease';
+        setTimeout(() => el.remove(), 200);
+      }, 2600);
+    }
+
+    function copyTextSafe(text, successMsg = 'Copied to clipboard') {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        ta.style.top = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (ok) {
+          showToast(successMsg, 'emerald');
+          return;
+        }
+      } catch (e) {}
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast(successMsg, 'emerald')).catch(() => {
+          showToast('Copy blocked by browser permissions.', 'danger');
+        });
+      } else {
+        showToast('Could not copy automatically.', 'danger');
+      }
+    }
+
+    function setLayoutMode(mode) {
+      state.layout = mode;
+      document.documentElement.setAttribute('data-layout', mode);
+      document.getElementById('btnLayoutStudio').classList.toggle('active', mode === 'studio');
+      document.getElementById('btnLayoutHandheld').classList.toggle('active', mode === 'handheld');
+      savePrefs();
+    }
+
+    function setTheme(theme) {
+      state.theme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      document.getElementById('btnThemeDark').classList.toggle('active', theme === 'dark');
+      document.getElementById('btnThemeDaylight').classList.toggle('active', theme === 'daylight');
+      const metaColor = document.getElementById('metaThemeColor');
+      if (metaColor) metaColor.setAttribute('content', theme === 'dark' ? '#0f1318' : '#eceee8');
+      savePrefs();
+      // Redraw SVG diagrams so ink/accent variables refresh seamlessly
+      calcGradient();
+      calcLinearInterp();
+    }
+
+    function switchTab(tabName) {
+      state.activeTab = tabName;
+      document.querySelectorAll('.tool-section').forEach(sec => {
+        sec.classList.toggle('hidden', sec.id !== 'tab-' + tabName);
+      });
+      document.querySelectorAll('.tab-btn, .hh-nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === tabName);
+      });
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    function updateOnlineStatus() {
+      const badgeText = document.getElementById('offlineBadgeText');
+      if (!badgeText) return;
+      if (navigator.onLine) {
+        badgeText.textContent = 'OFFLINE READY // LOCAL';
+      } else {
+        badgeText.textContent = 'OFFLINE MODE // ACTIVE';
+      }
+    }
+
+    // Inject dynamic inline PWA Manifest (zero external files)
+    function injectInlineManifest() {
+      try {
+        const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect width="192" height="192" rx="36" fill="#0f1318"/><rect x="18" y="18" width="156" height="156" rx="24" fill="#f59e0b"/><text x="96" y="122" font-family="monospace" font-weight="900" font-size="84" text-anchor="middle" fill="#0f1318">FC</text></svg>`;
+        const iconUrl = 'data:image/svg+xml;utf8,' + encodeURIComponent(iconSvg);
+        const manifest = {
+          name: 'FIELD-CART OS — Engineer Handheld & QR Studio',
+          short_name: 'FIELD-CART',
+          description: '100% Offline Engineering Calculator & QR Cartridge Studio',
+          start_url: '.',
+          display: 'standalone',
+          background_color: '#0c1015',
+          theme_color: '#0f1318',
+          icons: [{ src: iconUrl, sizes: '192x192', type: 'image/svg+xml' }]
+        };
+        const blob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+        const url = URL.createObjectURL(blob);
+        document.getElementById('dynamicManifest').setAttribute('href', url);
+      } catch (e) {}
+    }
+
+    function fmtNum(val, dec = 3) {
+      if (!Number.isFinite(val)) return '—';
+      return val.toFixed(dec);
+    }
+
+    function formatChainage(ch) {
+      if (!Number.isFinite(ch)) return '—';
+      const sign = ch < 0 ? '-' : '';
+      const abs = Math.abs(ch);
+      const km = Math.floor(abs / 1000);
+      const rem = abs - km * 1000;
+      const remStr = rem.toFixed(2).padStart(6, '0');
+      return `${sign}Ch ${km}+${remStr}`;
+    }
+
+    function escHtml(str) {
+      return String(str).replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[m]));
+    }
+
+    function csvCell(val, neutralizeFormula = false) {
+      let s = val === null || val === undefined ? '' : String(val);
+      if (neutralizeFormula && /^[=+\-@\t\r]/.test(s)) {
+        s = "'" + s;
+      }
+      if (/[",\r\n]/.test(s)) {
+        return '"' + s.replace(/"/g, '""') + '"';
+      }
+      return s;
+    }
+
+    function getUTF8ByteLength(str) {
+      if (typeof TextEncoder !== 'undefined') {
+        return new TextEncoder().encode(str).length;
+      }
+      return unescape(encodeURIComponent(str)).length;
+    }
+
+    function safeDecodeURIComponent(str) {
+      try {
+        return decodeURIComponent(str || '');
+      } catch (e) {
+        return String(str || '');
+      }
+    }
+
+    function generateCartId(prefix = 'cart') {
+      const rand = Math.floor(Math.random() * 1e6).toString(36).padStart(4, '0');
+      return `${prefix}-${Date.now()}-${rand}`;
+    }
+
+    /* ========================================================================
+       PART 4: TOOL 1 — GRADIENT & INVERT LEVEL CALCULATOR
+       ======================================================================== */
+    function setGradMode(mode) {
+      state.gradMode = mode;
+      document.querySelectorAll('#gradModePills .mode-pill').forEach(p => {
+        p.classList.toggle('active-amber', p.dataset.gmode === mode);
+      });
+
+      const showIL1 = mode !== 'find_il1';
+      const showIL2 = mode !== 'find_il2';
+      const showLen = mode !== 'find_len';
+      const showGrad = mode !== 'find_grad';
+      const showDir = mode === 'find_il2' || mode === 'find_il1';
+
+      document.getElementById('wrap_g_il1').classList.toggle('hidden', !showIL1);
+      document.getElementById('wrap_g_il2').classList.toggle('hidden', !showIL2);
+      document.getElementById('wrap_g_len').classList.toggle('hidden', !showLen);
+      document.getElementById('wrap_g_grad').classList.toggle('hidden', !showGrad);
+      document.getElementById('wrap_g_toggles').classList.toggle('hidden', !showGrad);
+      document.getElementById('wrap_g_dirToggle').classList.toggle('hidden', !showDir);
+
+      calcGradient();
+    }
+
+    function setGradUnit(unit) {
+      const valEl = document.getElementById('g_gradVal');
+      const cur = parseFloat(valEl.value);
+      if (unit !== state.gradUnit && Number.isFinite(cur) && cur > 0) {
+        // Convert existing input cleanly between 1:X and %
+        valEl.value = unit === 'pct' ? (100 / cur).toFixed(3) : (100 / cur).toFixed(1);
+      }
+      state.gradUnit = unit;
+      document.getElementById('btnGradUnitRatio').classList.toggle('active', unit === 'ratio');
+      document.getElementById('btnGradUnitPct').classList.toggle('active', unit === 'pct');
+      document.getElementById('g_gradUnitLabel').textContent = unit === 'ratio' ? '1 : X' : '%';
+      document.getElementById('g_gradPrefix').textContent = unit === 'ratio' ? '1 :' : '%';
+      calcGradient();
+    }
+
+    function setGradDir(dir) {
+      state.gradDir = dir;
+      document.getElementById('btnGradDirFall').classList.toggle('active', dir === 'fall');
+      document.getElementById('btnGradDirRise').classList.toggle('active', dir === 'rise');
+      calcGradient();
+    }
+
+    function applyGradPreset(unit, val) {
+      if (state.gradMode === 'find_grad') {
+        // Switch automatically to Find IL2 so preset takes immediate effect
+        setGradMode('find_il2');
+      }
+      state.gradUnit = unit;
+      document.getElementById('btnGradUnitRatio').classList.toggle('active', unit === 'ratio');
+      document.getElementById('btnGradUnitPct').classList.toggle('active', unit === 'pct');
+      document.getElementById('g_gradUnitLabel').textContent = unit === 'ratio' ? '1 : X' : '%';
+      document.getElementById('g_gradPrefix').textContent = unit === 'ratio' ? '1 :' : '%';
+      document.getElementById('g_gradVal').value = val;
+      calcGradient();
+    }
+
+    function swapGradientIL() {
+      const el1 = document.getElementById('g_il1');
+      const el2 = document.getElementById('g_il2');
+      const tmp = el1.value;
+      el1.value = el2.value;
+      el2.value = tmp;
+      calcGradient();
+      showToast('Swapped IL1 and IL2', 'amber');
+    }
+
+    function calcGradient() {
+      const mode = state.gradMode;
+      const inIL1 = parseFloat(document.getElementById('g_il1').value);
+      const inIL2 = parseFloat(document.getElementById('g_il2').value);
+      const inLen = parseFloat(document.getElementById('g_len').value);
+      const inGrad = parseFloat(document.getElementById('g_gradVal').value);
+
+      let il1 = inIL1, il2 = inIL2, len = inLen, decAbs = NaN;
+      let heroLabel = 'COMPUTED GRADIENT', heroVal = '—';
+      let formulaHtml = '';
+      let valid = true;
+
+      // Convert input gradient to decimal magnitude (m/m)
+      function inputToDec() {
+        if (!Number.isFinite(inGrad) || inGrad < 0) return NaN;
+        if (inGrad === 0) return 0;
+        return state.gradUnit === 'ratio' ? (1 / inGrad) : (inGrad / 100);
+      }
+
+      if (mode === 'find_grad') {
+        heroLabel = 'COMPUTED GRADIENT';
+        if (!Number.isFinite(il1) || !Number.isFinite(il2) || !Number.isFinite(len) || len <= 0) {
+          valid = false;
+        } else {
+          const dh = il2 - il1;
+          decAbs = Math.abs(dh) / len;
+          heroVal = decAbs === 0 ? 'LEVEL (0%)' : `1 : ${(1 / decAbs).toFixed(1)}`;
+          formulaHtml = `<strong>&Delta;h</strong> = IL2 - IL1 = ${fmtNum(il2)} - ${fmtNum(il1)} = <strong>${dh >= 0 ? '+' : ''}${fmtNum(dh)} m</strong><br>` +
+                        `<strong>Grade</strong> = |&Delta;h| / L = ${fmtNum(Math.abs(dh))} / ${fmtNum(len, 2)} = <strong>${(decAbs * 100).toFixed(3)}%</strong> (${decAbs === 0 ? 'FLAT' : '1:' + (1 / decAbs).toFixed(1)})`;
+        }
+      } else if (mode === 'find_il2') {
+        heroLabel = 'DOWNSTREAM INVERT (IL2)';
+        decAbs = inputToDec();
+        if (!Number.isFinite(il1) || !Number.isFinite(len) || len <= 0 || !Number.isFinite(decAbs)) {
+          valid = false;
+        } else {
+          const sign = state.gradDir === 'fall' ? -1 : 1;
+          const dh = sign * len * decAbs;
+          il2 = il1 + dh;
+          heroVal = `${il2.toFixed(3)} m`;
+          formulaHtml = `<strong>&Delta;h</strong> = ${sign < 0 ? '-' : '+'}(L &times; Grade) = ${sign < 0 ? '-' : '+'}(${fmtNum(len, 2)} &times; ${decAbs.toFixed(5)}) = <strong>${dh >= 0 ? '+' : ''}${fmtNum(dh)} m</strong><br>` +
+                        `<strong>IL2</strong> = IL1 + &Delta;h = ${fmtNum(il1)} ${dh >= 0 ? '+' : '-'} ${fmtNum(Math.abs(dh))} = <strong>${fmtNum(il2)} m</strong>`;
+        }
+      } else if (mode === 'find_il1') {
+        heroLabel = 'UPSTREAM INVERT (IL1)';
+        decAbs = inputToDec();
+        if (!Number.isFinite(il2) || !Number.isFinite(len) || len <= 0 || !Number.isFinite(decAbs)) {
+          valid = false;
+        } else {
+          // If pipe FALLS from IL1 to IL2, then IL1 is HIGHER than IL2 (+dh)
+          const sign = state.gradDir === 'fall' ? 1 : -1;
+          const delta = sign * len * decAbs;
+          il1 = il2 + delta;
+          heroVal = `${il1.toFixed(3)} m`;
+          formulaHtml = `<strong>Drop/Rise</strong> = L &times; Grade = ${fmtNum(len, 2)} &times; ${decAbs.toFixed(5)} = <strong>${fmtNum(Math.abs(delta))} m</strong><br>` +
+                        `<strong>IL1</strong> = IL2 ${sign > 0 ? '+' : '-'} |&Delta;h| = ${fmtNum(il2)} ${sign > 0 ? '+' : '-'} ${fmtNum(Math.abs(delta))} = <strong>${fmtNum(il1)} m</strong>`;
+        }
+      } else if (mode === 'find_len') {
+        heroLabel = 'REQUIRED HORIZONTAL LENGTH (L)';
+        decAbs = inputToDec();
+        if (!Number.isFinite(il1) || !Number.isFinite(il2) || !Number.isFinite(decAbs) || decAbs <= 0) {
+          valid = false;
+        } else {
+          const dhAbs = Math.abs(il2 - il1);
+          len = dhAbs / decAbs;
+          heroVal = `${len.toFixed(2)} m`;
+          formulaHtml = `<strong>|&Delta;h|</strong> = |IL2 - IL1| = |${fmtNum(il2)} - ${fmtNum(il1)}| = <strong>${fmtNum(dhAbs)} m</strong><br>` +
+                        `<strong>L</strong> = |&Delta;h| / Grade = ${fmtNum(dhAbs)} / ${decAbs.toFixed(5)} = <strong>${len.toFixed(2)} m</strong>`;
+        }
+      }
+
+      document.getElementById('g_outHeroLabel').textContent = heroLabel;
+
+      if (!valid) {
+        document.getElementById('g_outHeroVal').textContent = 'ENTER VALID INPUTS';
+        ['g_outRatio', 'g_outPct', 'g_outDec', 'g_outDeg', 'g_outDh', 'g_outSlopeLen'].forEach(id => {
+          document.getElementById(id).textContent = '—';
+        });
+        const badge = document.getElementById('g_flowBadge');
+        badge.className = 'tag-chip tag-neutral';
+        badge.textContent = 'STANDBY';
+        document.getElementById('g_formulaBox').innerHTML = '<strong>Input Notice:</strong> Enter positive Length / Gradient and valid Invert Levels.';
+        drawGradientSVG(null);
+        return;
+      }
+
+      const dh = il2 - il1; // negative = fall from MH-A to MH-B
+      const pct = decAbs * 100;
+      const deg = Math.atan(decAbs) * (180 / Math.PI);
+      const slopeLen = Math.hypot(len, dh);
+
+      document.getElementById('g_outHeroVal').textContent = heroVal;
+      document.getElementById('g_outRatio').textContent = decAbs === 0 ? 'FLAT (∞)' : `1 : ${(1 / decAbs).toFixed(1)}`;
+      document.getElementById('g_outPct').textContent = `${pct.toFixed(3)}%`;
+      document.getElementById('g_outDec').textContent = decAbs.toFixed(5);
+      document.getElementById('g_outDeg').textContent = `${deg.toFixed(3)}°`;
+      const dhMm = Math.round(dh * 1000);
+      const dhSign = dh > 0.00001 ? '+' : '';
+      document.getElementById('g_outDh').textContent = `${dhSign}${dh.toFixed(3)} m (${dhSign}${dhMm} mm)`;
+      document.getElementById('g_outSlopeLen').textContent = `${slopeLen.toFixed(3)} m`;
+
+      const badge = document.getElementById('g_flowBadge');
+      if (Math.abs(dh) < 1e-6) {
+        badge.className = 'tag-chip tag-neutral';
+        badge.innerHTML = 'LEVEL &#8212;';
+      } else if (dh < 0) {
+        badge.className = 'tag-chip tag-emerald';
+        badge.innerHTML = 'FALL A &rarr; B';
+      } else {
+        badge.className = 'tag-chip tag-amber';
+        badge.innerHTML = 'RISE A &rarr; B';
+      }
+
+      document.getElementById('g_formulaBox').innerHTML = formulaHtml;
+      document.getElementById('g_diagStatus').textContent = `L = ${len.toFixed(2)}m // Δh = ${dhSign}${dhMm}mm`;
+
+      drawGradientSVG({ il1, il2, len, dh, decAbs });
+    }
+
+    function drawGradientSVG(data) {
+      const svg = document.getElementById('gradSvg');
+      const cs = getComputedStyle(document.documentElement);
+      const cAmber = cs.getPropertyValue('--accent-amber').trim() || '#f59e0b';
+      const cCyan = cs.getPropertyValue('--accent-cyan').trim() || '#06b6d4';
+      const cText = cs.getPropertyValue('--text-primary').trim() || '#f1f5f9';
+      const cMuted = cs.getPropertyValue('--text-secondary').trim() || '#94a3b8';
+      const cGrid = cs.getPropertyValue('--svg-grid').trim() || 'rgba(148,163,184,0.15)';
+      const cGround = cs.getPropertyValue('--svg-ground').trim() || '#334155';
+      const cPipeFill = cs.getPropertyValue('--svg-pipe-fill').trim() || 'rgba(245,158,11,0.12)';
+      const cBg = cs.getPropertyValue('--bg-surface').trim() || '#141922';
+
+      if (!data) {
+        svg.innerHTML = `<text x="230" y="130" text-anchor="middle" fill="${cMuted}" font-family="monospace" font-size="13">AWAITING VALID PIPE PARAMETERS</text>`;
+        return;
+      }
+
+      const { il1, il2, len, dh, decAbs } = data;
+      // Exaggerate visual slope gently so small sewer grades (1:200) read clearly
+      const maxVisualDrop = 54;
+      const dir = Math.abs(dh) < 1e-6 ? 0 : (dh < 0 ? 1 : -1); // +1 means B is lower on screen
+      const visualDrop = dir * Math.min(maxVisualDrop, Math.max(14, Math.abs(dh) * 45));
+
+      const xA = 78, xB = 382;
+      const midY = 148;
+      const yA = midY - visualDrop / 2;
+      const yB = midY + visualDrop / 2;
+      const groundY = 46;
+      const pipeH = 16;
+
+      const gradeText = decAbs === 0 ? 'FLAT 0%' : `1:${(1 / decAbs).toFixed(1)} (${(decAbs * 100).toFixed(2)}%)`;
+      const dhText = `${dh >= 0 ? '+' : ''}${dh.toFixed(3)} m (${Math.round(dh * 1000)}mm)`;
+      const arrowX = (xA + xB) / 2;
+      const arrowY = (yA + yB) / 2;
+      const angleDeg = Math.atan2(yB - yA, xB - xA) * 180 / Math.PI;
+
+      // Subtle background technical grid
+      let gridLines = '';
+      for (let gx = 20; gx <= 440; gx += 30) {
+        gridLines += `<line x1="${gx}" y1="10" x2="${gx}" y2="245" stroke="${cGrid}" stroke-width="1"/>`;
+      }
+      for (let gy = 25; gy <= 235; gy += 30) {
+        gridLines += `<line x1="10" y1="${gy}" x2="450" y2="${gy}" stroke="${cGrid}" stroke-width="1"/>`;
+      }
+
+      svg.innerHTML = `
+        ${gridLines}
+        <!-- Ground surface line -->
+        <line x1="20" y1="${groundY}" x2="440" y2="${groundY}" stroke="${cGround}" stroke-width="2" stroke-dasharray="6,4"/>
+        <text x="230" y="${groundY - 8}" text-anchor="middle" fill="${cMuted}" font-family="monospace" font-size="10" font-weight="700">GROUND DATUM / COVER</text>
+
+        <!-- Manhole A Shaft -->
+        <rect x="${xA - 18}" y="${groundY}" width="36" height="${yA - groundY + 12}" fill="${cBg}" stroke="${cMuted}" stroke-width="2" rx="2"/>
+        <text x="${xA}" y="${groundY + 16}" text-anchor="middle" fill="${cText}" font-family="monospace" font-size="10" font-weight="800">MH-A</text>
+
+        <!-- Manhole B Shaft -->
+        <rect x="${xB - 18}" y="${groundY}" width="36" height="${yB - groundY + 12}" fill="${cBg}" stroke="${cMuted}" stroke-width="2" rx="2"/>
+        <text x="${xB}" y="${groundY + 16}" text-anchor="middle" fill="${cText}" font-family="monospace" font-size="10" font-weight="800">MH-B</text>
+
+        <!-- Pipe Barrel Polygon -->
+        <polygon points="${xA + 18},${yA - pipeH} ${xB - 18},${yB - pipeH} ${xB - 18},${yB} ${xA + 18},${yA}" fill="${cPipeFill}" stroke="${cAmber}" stroke-width="1.5"/>
+
+        <!-- Heavy Invert Line -->
+        <line x1="${xA}" y1="${yA}" x2="${xB}" y2="${yB}" stroke="${cAmber}" stroke-width="3.5" stroke-linecap="round"/>
+
+        <!-- Horizontal Datum Reference Line from IL1 -->
+        <line x1="${xA}" y1="${yA}" x2="${xB + 28}" y2="${yA}" stroke="${cCyan}" stroke-width="1.2" stroke-dasharray="4,4"/>
+
+        <!-- Vertical Fall / Rise Dimension at MH-B -->
+        <line x1="${xB + 26}" y1="${yA}" x2="${xB + 26}" y2="${yB}" stroke="${cCyan}" stroke-width="2"/>
+        <line x1="${xB + 21}" y1="${yA}" x2="${xB + 31}" y2="${yA}" stroke="${cCyan}" stroke-width="2"/>
+        <line x1="${xB + 21}" y1="${yB}" x2="${xB + 31}" y2="${yB}" stroke="${cCyan}" stroke-width="2"/>
+
+        <!-- Invert Level Dots & Labels -->
+        <circle cx="${xA}" cy="${yA}" r="4.5" fill="${cAmber}" stroke="${cBg}" stroke-width="1.5"/>
+        <circle cx="${xB}" cy="${yB}" r="4.5" fill="${cAmber}" stroke="${cBg}" stroke-width="1.5"/>
+
+        <rect x="${xA - 48}" y="${yA + 16}" width="96" height="20" rx="4" fill="${cBg}" stroke="${cAmber}" stroke-width="1.2"/>
+        <text x="${xA}" y="${yA + 29}" text-anchor="middle" fill="${cText}" font-family="monospace" font-size="10.5" font-weight="800">IL1 ${il1.toFixed(3)}</text>
+
+        <rect x="${xB - 48}" y="${yB + 16}" width="96" height="20" rx="4" fill="${cBg}" stroke="${cAmber}" stroke-width="1.2"/>
+        <text x="${xB}" y="${yB + 29}" text-anchor="middle" fill="${cText}" font-family="monospace" font-size="10.5" font-weight="800">IL2 ${il2.toFixed(3)}</text>
+
+        <!-- Grade Badge along Pipe -->
+        <g transform="translate(${arrowX}, ${arrowY - 22}) rotate(${angleDeg})">
+          <rect x="-72" y="-12" width="144" height="20" rx="4" fill="${cBg}" stroke="${cAmber}" stroke-width="1.3"/>
+          <text x="0" y="2" text-anchor="middle" fill="${cAmber}" font-family="monospace" font-size="10.5" font-weight="800">${gradeText}</text>
+        </g>
+
+        <!-- Delta H Callout -->
+        <text x="${xB + 26}" y="${Math.min(yA, yB) - 8}" text-anchor="end" fill="${cCyan}" font-family="monospace" font-size="10" font-weight="800">&Delta;h ${dhText}</text>
+
+        <!-- Horizontal Length Dimension at Bottom -->
+        <line x1="${xA}" y1="232" x2="${xB}" y2="232" stroke="${cMuted}" stroke-width="1.5"/>
+        <line x1="${xA}" y1="226" x2="${xA}" y2="238" stroke="${cMuted}" stroke-width="1.5"/>
+        <line x1="${xB}" y1="226" x2="${xB}" y2="238" stroke="${cMuted}" stroke-width="1.5"/>
+        <rect x="172" y="222" width="116" height="20" rx="4" fill="${cBg}" stroke="${cMuted}" stroke-width="1"/>
+        <text x="230" y="236" text-anchor="middle" fill="${cText}" font-family="monospace" font-size="11" font-weight="800">L = ${len.toFixed(2)} m</text>
+      `;
+    }
+
+    /* ========================================================================
+       PART 5: TOOL 2 — INTERPOLATION STUDIO (LINEAR & CHAINAGE PROFILE)
+       ======================================================================== */
+    function setInterpSubMode(sub) {
+      state.interpSubMode = sub;
+      document.getElementById('btnInterpLinear').classList.toggle('active-cyan', sub === 'linear');
+      document.getElementById('btnInterpChainage').classList.toggle('active-cyan', sub === 'chainage');
+      document.getElementById('interpSubLinear').classList.toggle('hidden', sub !== 'linear');
+      document.getElementById('interpSubChainage').classList.toggle('hidden', sub !== 'chainage');
+      if (sub === 'linear') calcLinearInterp();
+      else calcChainageProfile();
+    }
+
+    function setInterpSolve(target) {
+      state.interpSolve = target;
+      document.getElementById('btnSolveY').classList.toggle('active', target === 'y');
+      document.getElementById('btnSolveX').classList.toggle('active', target === 'x');
+      document.getElementById('i_targetLabel').textContent = target === 'y' ? 'TARGET X' : 'TARGET Y';
+      document.getElementById('i_outLabel').textContent = target === 'y' ? 'INTERPOLATED Y' : 'INTERPOLATED X';
+      calcLinearInterp();
+    }
+
+    function flashCurrentInterp() {
+      openFlashModal(state.interpSubMode === 'linear' ? 'interp' : 'chainage');
+    }
+
+    function calcLinearInterp() {
+      const x1 = parseFloat(document.getElementById('i_x1').value);
+      const y1 = parseFloat(document.getElementById('i_y1').value);
+      const x2 = parseFloat(document.getElementById('i_x2').value);
+      const y2 = parseFloat(document.getElementById('i_y2').value);
+      const tgt = parseFloat(document.getElementById('i_target').value);
+
+      const badge = document.getElementById('i_rangeBadge');
+
+      if (![x1, y1, x2, y2, tgt].every(Number.isFinite)) {
+        document.getElementById('i_outVal').textContent = 'ENTER VALUES';
+        document.getElementById('i_outProg').textContent = '—';
+        document.getElementById('i_outRate').textContent = '—';
+        document.getElementById('i_outRatio').textContent = '—';
+        document.getElementById('i_formulaBox').innerHTML = 'Enter coordinates for P1(X1, Y1), P2(X2, Y2), and Target.';
+        badge.className = 'tag-chip tag-neutral';
+        badge.textContent = 'STANDBY';
+        drawInterpSVG(null);
+        return;
+      }
+
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      let tx, ty, tFrac, formulaHtml;
+
+      if (state.interpSolve === 'y') {
+        if (Math.abs(dx) < 1e-12) {
+          document.getElementById('i_outVal').textContent = 'DIV BY ZERO (X1=X2)';
+          badge.className = 'tag-chip tag-danger';
+          badge.textContent = 'VERTICAL LINE';
+          drawInterpSVG(null);
+          return;
+        }
+        tx = tgt;
+        tFrac = (tx - x1) / dx;
+        ty = y1 + tFrac * dy;
+        document.getElementById('i_outVal').textContent = ty.toFixed(3);
+        formulaHtml = `<strong>Y</strong> = Y1 + ((X - X1) / (X2 - X1)) &times; (Y2 - Y1)<br>` +
+                      `<strong>Y</strong> = ${y1} + ((${tx} - ${x1}) / ${dx.toFixed(3)}) &times; ${dy.toFixed(3)} = <strong>${ty.toFixed(4)}</strong>`;
+      } else {
+        if (Math.abs(dy) < 1e-12) {
+          document.getElementById('i_outVal').textContent = 'DIV BY ZERO (Y1=Y2)';
+          badge.className = 'tag-chip tag-danger';
+          badge.textContent = 'FLAT LINE';
+          drawInterpSVG(null);
+          return;
+        }
+        ty = tgt;
+        tFrac = (ty - y1) / dy;
+        tx = x1 + tFrac * dx;
+        document.getElementById('i_outVal').textContent = tx.toFixed(3);
+        formulaHtml = `<strong>X</strong> = X1 + ((Y - Y1) / (Y2 - Y1)) &times; (X2 - X1)<br>` +
+                      `<strong>X</strong> = ${x1} + ((${ty} - ${y1}) / ${dy.toFixed(3)}) &times; ${dx.toFixed(3)} = <strong>${tx.toFixed(4)}</strong>`;
+      }
+
+      const isExtrap = tFrac < -1e-9 || tFrac > 1 + 1e-9;
+      if (isExtrap) {
+        badge.className = 'tag-chip tag-danger';
+        badge.textContent = 'EXTRAPOLATION WARNING';
+      } else {
+        badge.className = 'tag-chip tag-cyan';
+        badge.textContent = 'INTERPOLATED (IN RANGE)';
+      }
+
+      const rate = Math.abs(dx) < 1e-12 ? NaN : dy / dx;
+      document.getElementById('i_outProg').textContent = `${(tFrac * 100).toFixed(1)}%`;
+      document.getElementById('i_outRate').textContent = Number.isFinite(rate) ? `${rate >= 0 ? '+' : ''}${rate.toFixed(4)}` : '∞';
+      document.getElementById('i_outRatio').textContent = (!Number.isFinite(rate) || Math.abs(rate) < 1e-9) ? 'FLAT' : `1 : ${Math.abs(1 / rate).toFixed(1)}`;
+      document.getElementById('i_formulaBox').innerHTML = formulaHtml;
+      document.getElementById('i_plotMeta').textContent = `P(${tx.toFixed(2)}, ${ty.toFixed(3)})`;
+
+      drawInterpSVG({ x1, y1, x2, y2, tx, ty, isExtrap });
+    }
+
+    function drawInterpSVG(data) {
+      const svg = document.getElementById('interpSvg');
+      const cs = getComputedStyle(document.documentElement);
+      const cCyan = cs.getPropertyValue('--accent-cyan').trim() || '#06b6d4';
+      const cAmber = cs.getPropertyValue('--accent-amber').trim() || '#f59e0b';
+      const cDanger = cs.getPropertyValue('--accent-danger').trim() || '#ef4444';
+      const cText = cs.getPropertyValue('--text-primary').trim() || '#f1f5f9';
+      const cMuted = cs.getPropertyValue('--text-secondary').trim() || '#94a3b8';
+      const cGrid = cs.getPropertyValue('--svg-grid').trim() || 'rgba(148,163,184,0.15)';
+      const cBg = cs.getPropertyValue('--bg-surface').trim() || '#141922';
+
+      if (!data) {
+        svg.innerHTML = `<text x="230" y="145" text-anchor="middle" fill="${cMuted}" font-family="monospace" font-size="13">AWAITING VALID COORDINATES</text>`;
+        return;
+      }
+
+      const { x1, y1, x2, y2, tx, ty, isExtrap } = data;
+      const padL = 56, padR = 28, padT = 26, padB = 42;
+      const plotW = 460 - padL - padR;
+      const plotH = 285 - padT - padB;
+
+      let minX = Math.min(x1, x2, tx);
+      let maxX = Math.max(x1, x2, tx);
+      let minY = Math.min(y1, y2, ty);
+      let maxY = Math.max(y1, y2, ty);
+
+      const spanX = (maxX - minX) || 10;
+      const spanY = (maxY - minY) || 10;
+      minX -= spanX * 0.14;
+      maxX += spanX * 0.14;
+      minY -= spanY * 0.18;
+      maxY += spanY * 0.18;
+
+      const mapX = v => padL + ((v - minX) / (maxX - minX)) * plotW;
+      const mapY = v => padT + plotH - ((v - minY) / (maxY - minY)) * plotH;
+
+      const sx1 = mapX(x1), sy1 = mapY(y1);
+      const sx2 = mapX(x2), sy2 = mapY(y2);
+      const stx = mapX(tx), sty = mapY(ty);
+
+      // Grid ticks (4 intervals)
+      let gridHtml = '';
+      for (let i = 0; i <= 4; i++) {
+        const gx = padL + (plotW * i) / 4;
+        const gy = padT + (plotH * i) / 4;
+        const vx = minX + ((maxX - minX) * i) / 4;
+        const vy = maxY - ((maxY - minY) * i) / 4;
+        gridHtml += `<line x1="${gx}" y1="${padT}" x2="${gx}" y2="${padT + plotH}" stroke="${cGrid}" stroke-width="1"/>`;
+        gridHtml += `<line x1="${padL}" y1="${gy}" x2="${padL + plotW}" y2="${gy}" stroke="${cGrid}" stroke-width="1"/>`;
+        gridHtml += `<text x="${gx}" y="${padT + plotH + 16}" text-anchor="middle" fill="${cMuted}" font-family="monospace" font-size="9.5">${vx.toFixed(1)}</text>`;
+        gridHtml += `<text x="${padL - 8}" y="${gy + 3}" text-anchor="end" fill="${cMuted}" font-family="monospace" font-size="9.5">${vy.toFixed(2)}</text>`;
+      }
+
+      const tgtColor = isExtrap ? cDanger : cAmber;
+      // Dashed extension line if extrapolating
+      let extrapLine = '';
+      if (isExtrap) {
+        const d1 = Math.hypot(tx - x1, ty - y1);
+        const d2 = Math.hypot(tx - x2, ty - y2);
+        const nearX = d1 < d2 ? sx1 : sx2;
+        const nearY = d1 < d2 ? sy1 : sy2;
+        extrapLine = `<line x1="${nearX}" y1="${nearY}" x2="${stx}" y2="${sty}" stroke="${cDanger}" stroke-width="2.5" stroke-dasharray="6,4"/>`;
+      }
+
+      const pillX = Math.min(Math.max(stx - 54, padL + 4), 460 - padR - 110);
+      const pillY = sty > padT + 38 ? sty - 30 : sty + 12;
+
+      svg.innerHTML = `
+        ${gridHtml}
+        <!-- Axes -->
+        <line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT + plotH}" stroke="${cMuted}" stroke-width="1.5"/>
+        <line x1="${padL}" y1="${padT + plotH}" x2="${padL + plotW}" y2="${padT + plotH}" stroke="${cMuted}" stroke-width="1.5"/>
+        <text x="${padL + plotW / 2}" y="278" text-anchor="middle" fill="${cMuted}" font-family="monospace" font-size="10" font-weight="700">X AXIS</text>
+
+        <!-- Crosshairs to target -->
+        <line x1="${stx}" y1="${sty}" x2="${stx}" y2="${padT + plotH}" stroke="${tgtColor}" stroke-width="1.2" stroke-dasharray="3,3"/>
+        <line x1="${padL}" y1="${sty}" x2="${stx}" y2="${sty}" stroke="${tgtColor}" stroke-width="1.2" stroke-dasharray="3,3"/>
+
+        <!-- Extrapolation Segment -->
+        ${extrapLine}
+
+        <!-- Main Segment P1 -> P2 -->
+        <line x1="${sx1}" y1="${sy1}" x2="${sx2}" y2="${sy2}" stroke="${cCyan}" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- Endpoints -->
+        <circle cx="${sx1}" cy="${sy1}" r="5" fill="${cCyan}" stroke="${cBg}" stroke-width="1.5"/>
+        <text x="${sx1}" y="${sy1 - 9}" text-anchor="middle" fill="${cText}" font-family="monospace" font-size="10" font-weight="700">P1</text>
+
+        <circle cx="${sx2}" cy="${sy2}" r="5" fill="${cCyan}" stroke="${cBg}" stroke-width="1.5"/>
+        <text x="${sx2}" y="${sy2 - 9}" text-anchor="middle" fill="${cText}" font-family="monospace" font-size="10" font-weight="700">P2</text>
+
+        <!-- Target Point -->
+        <circle cx="${stx}" cy="${sty}" r="7" fill="${tgtColor}" stroke="${cBg}" stroke-width="2"/>
+        <rect x="${pillX}" y="${pillY}" width="108" height="20" rx="4" fill="${cBg}" stroke="${tgtColor}" stroke-width="1.4"/>
+        <text x="${pillX + 54}" y="${pillY + 13}" text-anchor="middle" fill="${tgtColor}" font-family="monospace" font-size="10" font-weight="800">(${tx.toFixed(1)}, ${ty.toFixed(3)})</text>
+      `;
+    }
+
+    function setChainageStep(step) {
+      document.getElementById('c_iv').value = step;
+      calcChainageProfile();
+    }
+
+    function calcChainageProfile() {
+      const sc = parseFloat(document.getElementById('c_sc').value);
+      const sl = parseFloat(document.getElementById('c_sl').value);
+      const ec = parseFloat(document.getElementById('c_ec').value);
+      const el = parseFloat(document.getElementById('c_el').value);
+      const iv = parseFloat(document.getElementById('c_iv').value);
+      const extraStr = document.getElementById('c_extra').value || '';
+      const tbody = document.getElementById('chainageTbody');
+
+      if (![sc, sl, ec, el, iv].every(Number.isFinite) || iv <= 0 || Math.abs(ec - sc) < 1e-9) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:16px;">Enter valid Start/End Chainages and positive Interval.</td></tr>`;
+        state.lastChainageRows = [];
+        return;
+      }
+
+      const dir = ec > sc ? 1 : -1;
+      const run = Math.abs(ec - sc);
+      const totalDh = el - sl;
+      const gradeDec = totalDh / (ec - sc); // m per m of chainage
+      const gradePct = (totalDh / run) * 100;
+      const gradeRatio = Math.abs(totalDh) < 1e-9 ? 'FLAT' : `1:${Math.abs(run / totalDh).toFixed(1)}`;
+
+      // Generate regular stations (capped at 400 rows for safety)
+      const stations = [];
+      const seen = new Set();
+
+      function pushStation(ch, isCustom) {
+        const key = Math.round(ch * 1000);
+        if (seen.has(key)) return;
+        seen.add(key);
+        const dist = Math.abs(ch - sc);
+        const lvl = sl + (ch - sc) * gradeDec;
+        const cumDh = lvl - sl;
+        stations.push({ ch, dist, lvl, cumDh, isCustom });
+      }
+
+      pushStation(sc, false);
+      let count = 0;
+      for (let step = iv; step < run - 1e-6 && count < 400; step += iv, count++) {
+        pushStation(sc + dir * step, false);
+      }
+      pushStation(ec, false);
+
+      // Parse custom extra chainages
+      extraStr.split(',').forEach(part => {
+        const v = parseFloat(part.trim());
+        if (Number.isFinite(v)) pushStation(v, true);
+      });
+
+      stations.sort((a, b) => dir * (a.ch - b.ch));
+      state.lastChainageRows = stations;
+
+      document.getElementById('c_sumRun').textContent = `${run.toFixed(2)} m`;
+      document.getElementById('c_sumGrade').textContent = `${gradePct >= 0 ? '+' : ''}${gradePct.toFixed(3)}% (${gradeRatio})`;
+      document.getElementById('c_sumDh').textContent = `${totalDh >= 0 ? '+' : ''}${totalDh.toFixed(3)} m (${stations.length} pts)`;
+
+      tbody.innerHTML = stations.map(st => `
+        <tr class="${st.isCustom ? 'custom-row' : ''}">
+          <td><strong>${formatChainage(st.ch)}</strong>${st.isCustom ? ' <span class="tag-chip tag-cyan" style="padding:1px 4px;font-size:9px;">EXT</span>' : ''}</td>
+          <td>${st.ch.toFixed(2)}</td>
+          <td>${st.dist.toFixed(2)} m</td>
+          <td><strong>${st.lvl.toFixed(3)}</strong></td>
+          <td style="color:${st.cumDh < -1e-6 ? 'var(--accent-amber)' : st.cumDh > 1e-6 ? 'var(--accent-emerald)' : 'var(--text-muted)'};">${st.cumDh >= 0 ? '+' : ''}${st.cumDh.toFixed(3)} m</td>
+        </tr>
+      `).join('');
+    }
+
+    function copyChainageCSV() {
+      if (!state.lastChainageRows.length) {
+        showToast('No chainage table to copy.', 'danger');
+        return;
+      }
+      const lines = ['Station,Chainage_m,Dist_From_Start_m,Interp_Level_m,Cumulative_dH_m'];
+      state.lastChainageRows.forEach(r => {
+        lines.push([
+          csvCell(formatChainage(r.ch), true),
+          csvCell(r.ch.toFixed(2)),
+          csvCell(r.dist.toFixed(2)),
+          csvCell(r.lvl.toFixed(3)),
+          csvCell(r.cumDh.toFixed(3))
+        ].join(','));
+      });
+      copyTextSafe(lines.join('\n'), `Copied ${state.lastChainageRows.length} stations as CSV`);
+    }
+
+    /* ========================================================================
+       PART 6: TOOL 3 — SITE BENCH (LEVELING HPC + SLOPE & VOLUME CONVERTER)
+       ======================================================================== */
+    function setBenchSubMode(sub) {
+      state.benchSubMode = sub;
+      document.getElementById('btnBenchLevel').classList.toggle('active-emerald', sub === 'level');
+      document.getElementById('btnBenchConvert').classList.toggle('active-emerald', sub === 'convert');
+      document.getElementById('benchSubLevel').classList.toggle('hidden', sub !== 'level');
+      document.getElementById('benchSubConvert').classList.toggle('hidden', sub !== 'convert');
+      document.getElementById('btnFlashBench').classList.toggle('hidden', sub !== 'level');
+    }
+
+    function renderLevelRows() {
+      const tbody = document.getElementById('levelTbody');
+      tbody.innerHTML = state.levelRows.map((row, idx) => `
+        <tr>
+          <td><input type="text" class="cell-input" value="${escHtml(row.label)}" onchange="updateLevelRow(${idx}, 'label', this.value)" placeholder="STN ${idx + 1}" /></td>
+          <td><input type="number" step="0.001" class="cell-input" value="${escHtml(row.staff)}" oninput="updateLevelRow(${idx}, 'staff', this.value)" placeholder="1.500" /></td>
+          <td><input type="number" step="0.001" class="cell-input" value="${escHtml(row.design)}" oninput="updateLevelRow(${idx}, 'design', this.value)" placeholder="optional" /></td>
+          <td id="l_rl_${idx}" style="font-weight:800;">—</td>
+          <td id="l_cf_${idx}">—</td>
+          <td><button type="button" class="btn btn-sm btn-ghost" style="padding:4px 8px; min-height:28px;" onclick="removeLevelRow(${idx})" title="Remove row">&#10005;</button></td>
+        </tr>
+      `).join('');
+      calcLeveling();
+    }
+
+    function updateLevelRow(idx, field, val) {
+      if (state.levelRows[idx]) {
+        state.levelRows[idx][field] = val;
+        calcLeveling();
+      }
+    }
+
+    function addLevelRow() {
+      const n = state.levelRows.length + 1;
+      state.levelRows.push({ label: `PT-${n}`, staff: '', design: '' });
+      renderLevelRows();
+    }
+
+    function removeLevelRow(idx) {
+      state.levelRows.splice(idx, 1);
+      renderLevelRows();
+    }
+
+    function resetLevelRows() {
+      state.levelRows = [{ label: 'PT-1', staff: '', design: '' }];
+      renderLevelRows();
+      showToast('Leveling log cleared', 'emerald');
+    }
+
+    function calcLeveling() {
+      const tbm = parseFloat(document.getElementById('l_tbm').value);
+      const bs = parseFloat(document.getElementById('l_bs').value);
+      const hpc = (Number.isFinite(tbm) && Number.isFinite(bs)) ? (tbm + bs) : NaN;
+      document.getElementById('l_hpcVal').textContent = Number.isFinite(hpc) ? `${hpc.toFixed(3)} m` : '—';
+
+      state.levelRows.forEach((row, idx) => {
+        const rlCell = document.getElementById(`l_rl_${idx}`);
+        const cfCell = document.getElementById(`l_cf_${idx}`);
+        if (!rlCell || !cfCell) return;
+
+        const staff = parseFloat(row.staff);
+        const design = parseFloat(row.design);
+
+        if (!Number.isFinite(hpc) || !Number.isFinite(staff)) {
+          rlCell.textContent = '—';
+          cfCell.innerHTML = '<span class="tag-chip tag-neutral">—</span>';
+          return;
+        }
+
+        const rl = hpc - staff;
+        rlCell.textContent = rl.toFixed(3);
+
+        if (!Number.isFinite(design)) {
+          cfCell.innerHTML = '<span class="tag-chip tag-neutral">NO DESIGN</span>';
+        } else {
+          // Design - Actual RL: positive means ground is lower -> FILL needed; negative means ground is higher -> CUT needed
+          const diffM = design - rl;
+          const diffMm = Math.round(diffM * 1000);
+          if (Math.abs(diffMm) <= 2) {
+            cfCell.innerHTML = `<span class="tag-chip tag-emerald">ON GRADE (${diffMm >= 0 ? '+' : ''}${diffMm}mm)</span>`;
+          } else if (diffMm > 0) {
+            cfCell.innerHTML = `<span class="tag-chip tag-cyan">+FILL ${diffMm} mm</span>`;
+          } else {
+            cfCell.innerHTML = `<span class="tag-chip tag-danger">-CUT ${Math.abs(diffMm)} mm</span>`;
+          }
+        }
+      });
+    }
+
+    function copyLevelCSV() {
+      const tbm = parseFloat(document.getElementById('l_tbm').value);
+      const bs = parseFloat(document.getElementById('l_bs').value);
+      const hpc = tbm + bs;
+      const lines = [
+        ['TBM', Number.isFinite(tbm) ? tbm : '', 'BS', Number.isFinite(bs) ? bs : '', 'HPC', Number.isFinite(hpc) ? hpc.toFixed(3) : ''].map(v => csvCell(v)).join(','),
+        'Label,Staff_m,Design_RL_m,Reduced_RL_m,CutFill_mm'
+      ];
+      state.levelRows.forEach(r => {
+        const st = parseFloat(r.staff);
+        const ds = parseFloat(r.design);
+        const rl = Number.isFinite(hpc) && Number.isFinite(st) ? (hpc - st) : NaN;
+        const cf = Number.isFinite(rl) && Number.isFinite(ds) ? Math.round((ds - rl) * 1000) : '';
+        lines.push([
+          csvCell(r.label, true),
+          csvCell(Number.isFinite(st) ? r.staff : ''),
+          csvCell(Number.isFinite(ds) ? r.design : ''),
+          csvCell(Number.isFinite(rl) ? rl.toFixed(3) : ''),
+          csvCell(cf)
+        ].join(','));
+      });
+      copyTextSafe(lines.join('\n'), 'Copied Leveling Log as CSV');
+    }
+
+    // Linked 4-way Slope Converter
+    function syncSlope(source) {
+      const elRatio = document.getElementById('sc_ratio');
+      const elPct = document.getElementById('sc_pct');
+      const elDeg = document.getElementById('sc_deg');
+      const elMm = document.getElementById('sc_mm');
+
+      let dec = NaN;
+      if (source === 'ratio') {
+        const v = parseFloat(elRatio.value);
+        if (Number.isFinite(v) && v > 0) dec = 1 / v;
+      } else if (source === 'pct') {
+        const v = parseFloat(elPct.value);
+        if (Number.isFinite(v) && v >= 0) dec = v / 100;
+      } else if (source === 'deg') {
+        const v = parseFloat(elDeg.value);
+        if (Number.isFinite(v) && v >= 0 && v < 89.9) dec = Math.tan(v * Math.PI / 180);
+      } else if (source === 'mm') {
+        const v = parseFloat(elMm.value);
+        if (Number.isFinite(v) && v >= 0) dec = v / 1000;
+      }
+
+      if (!Number.isFinite(dec)) return;
+
+      if (source !== 'ratio') elRatio.value = dec === 0 ? '' : (1 / dec).toFixed(2);
+      if (source !== 'pct') elPct.value = (dec * 100).toFixed(3);
+      if (source !== 'deg') elDeg.value = (Math.atan(dec) * 180 / Math.PI).toFixed(3);
+      if (source !== 'mm') elMm.value = (dec * 1000).toFixed(2);
+    }
+
+    function calcVolume() {
+      const l = parseFloat(document.getElementById('v_len').value);
+      const w = parseFloat(document.getElementById('v_wid').value);
+      const d = parseFloat(document.getElementById('v_dep').value);
+      const q = parseFloat(document.getElementById('v_qty').value);
+
+      if (![l, w, d, q].every(Number.isFinite) || l < 0 || w < 0 || d < 0 || q <= 0) {
+        document.getElementById('v_outNet').textContent = '—';
+        document.getElementById('v_outWasteBadge').textContent = '+10% WASTAGE: —';
+        return;
+      }
+
+      const net = l * w * d * q;
+      const waste = net * 1.1;
+      document.getElementById('v_outNet').textContent = `${net.toFixed(3)} m³`;
+      document.getElementById('v_outWasteBadge').textContent = `+10% WASTAGE: ${waste.toFixed(3)} m³`;
+      document.getElementById('v_outArea').textContent = `${(l * w * q).toFixed(2)} m²`;
+      document.getElementById('v_outSec').textContent = `${(w * d).toFixed(2)} m²`;
+      document.getElementById('v_outWall').textContent = `${(2 * l * d * q).toFixed(2)} m²`;
+    }
+
+    /* ========================================================================
+       PART 7: COMPACT CARTRIDGE CODEC (FC1|...) & CARTRIDGE MANAGEMENT
+       ======================================================================== */
+    function encodeCartridgeString(cart) {
+      const cleanName = (cart.name || 'Untitled').replace(/[|]/g, '-').slice(0, 40);
+      const p = cart.payload;
+      if (cart.type === 'gradient') {
+        return `FC1|G|${cleanName}|m=${p.mode}&il1=${p.il1}&il2=${p.il2}&l=${p.len}&g=${p.gradVal}&gu=${p.gradUnit}&d=${p.gradDir}`;
+      }
+      if (cart.type === 'interp') {
+        return `FC1|I|${cleanName}|x1=${p.x1}&y1=${p.y1}&x2=${p.x2}&y2=${p.y2}&t=${p.tgt}&s=${p.solve}`;
+      }
+      if (cart.type === 'chainage') {
+        return `FC1|C|${cleanName}|sc=${p.sc}&sl=${p.sl}&ec=${p.ec}&el=${p.el}&iv=${p.iv}&ex=${encodeURIComponent(p.ex || '')}`;
+      }
+      if (cart.type === 'bench') {
+        // Keep up to 8 rows compactly so QR remains crisp and easily scannable
+        const rowStr = (p.rows || []).slice(0, 8).map(r => `${(r.label || '').replace(/[:;|]/g, '')}:${r.staff || ''}:${r.design || ''}`).join(';');
+        return `FC1|L|${cleanName}|tbm=${p.tbm}&bs=${p.bs}&r=${rowStr}`;
+      }
+      return JSON.stringify(cart);
+    }
+
+    function sanitizeCartridge(raw) {
+      if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+      const type = typeof raw.type === 'string' && ALLOWED_CART_TYPES.has(raw.type) ? raw.type : null;
+      if (!type || !raw.payload || typeof raw.payload !== 'object' || Array.isArray(raw.payload)) return null;
+
+      const rawId = typeof raw.id === 'string' ? raw.id.trim() : '';
+      const id = /^[A-Za-z0-9_-]{1,64}$/.test(rawId) ? rawId : generateCartId('cart');
+      const name = String(raw.name || 'Untitled Cartridge').replace(/[\r\n\t]+/g, ' ').trim().slice(0, 40) || 'Untitled Cartridge';
+      const createdAt = Number.isFinite(Number(raw.createdAt)) && Number(raw.createdAt) > 0 ? Number(raw.createdAt) : Date.now();
+      const rp = raw.payload;
+      const numOr = (v, fb = 0) => {
+        const n = Number(v);
+        return Number.isFinite(n) ? n : fb;
+      };
+
+      let payload;
+      if (type === 'gradient') {
+        payload = {
+          tool: 'gradient',
+          mode: ALLOWED_GRAD_MODES.has(rp.mode) ? rp.mode : 'find_grad',
+          il1: numOr(rp.il1, 0),
+          il2: numOr(rp.il2, 0),
+          len: Math.max(0, numOr(rp.len, 0)),
+          gradVal: Math.max(0, numOr(rp.gradVal, 100)),
+          gradUnit: rp.gradUnit === 'pct' ? 'pct' : 'ratio',
+          gradDir: rp.gradDir === 'rise' ? 'rise' : 'fall'
+        };
+      } else if (type === 'interp') {
+        payload = {
+          tool: 'interp',
+          x1: numOr(rp.x1, 0),
+          y1: numOr(rp.y1, 0),
+          x2: numOr(rp.x2, 0),
+          y2: numOr(rp.y2, 0),
+          tgt: numOr(rp.tgt, 0),
+          solve: rp.solve === 'x' ? 'x' : 'y'
+        };
+      } else if (type === 'chainage') {
+        payload = {
+          tool: 'chainage',
+          sc: numOr(rp.sc, 0),
+          sl: numOr(rp.sl, 0),
+          ec: numOr(rp.ec, 0),
+          el: numOr(rp.el, 0),
+          iv: Math.max(0.01, numOr(rp.iv, 10)),
+          ex: String(rp.ex || '').slice(0, 200)
+        };
+      } else {
+        const rawRows = Array.isArray(rp.rows) ? rp.rows.slice(0, MAX_BENCH_ROWS) : [];
+        const rows = rawRows
+          .filter(r => r && typeof r === 'object')
+          .map(r => ({
+            label: String(r.label || '').replace(/[\r\n\t]+/g, ' ').slice(0, 24),
+            staff: r.staff === '' || r.staff === null || r.staff === undefined ? '' : (Number.isFinite(Number(r.staff)) ? String(r.staff).slice(0, 16) : ''),
+            design: r.design === '' || r.design === null || r.design === undefined ? '' : (Number.isFinite(Number(r.design)) ? String(r.design).slice(0, 16) : '')
+          }));
+        payload = {
+          tool: 'bench',
+          tbm: numOr(rp.tbm, 0),
+          bs: numOr(rp.bs, 0),
+          rows: rows.length ? rows : [{ label: 'PT-1', staff: '', design: '' }]
+        };
+      }
+
+      return {
+        id,
+        type,
+        name,
+        createdAt,
+        summary: buildSummary(type, payload),
+        payload
+      };
+    }
+
+    function decodeCartridgeString(raw) {
+      const str = (raw || '').trim();
+      if (!str) throw new Error('Empty cartridge code.');
+      if (str.length > 65536) throw new Error('Cartridge code exceeds maximum safe size.');
+
+      if (str.startsWith('{')) {
+        const obj = JSON.parse(str);
+        const clean = sanitizeCartridge(obj);
+        if (clean) return clean;
+        throw new Error('JSON cartridge is invalid or uses an unsupported type.');
+      }
+
+      if (!str.startsWith('FC1|')) {
+        throw new Error('Unrecognized code format. Expected FC1|... or JSON.');
+      }
+
+      const parts = str.split('|');
+      if (parts.length < 4) throw new Error('Malformed FC1 cartridge code.');
+      const typeCode = parts[1];
+      const name = (parts[2] || 'Imported Cartridge').slice(0, 40);
+      const kvStr = parts.slice(3).join('|');
+      const kv = Object.create(null);
+      kvStr.split('&').forEach(pair => {
+        const eq = pair.indexOf('=');
+        if (eq > 0) {
+          const k = pair.slice(0, eq);
+          if (k !== '__proto__' && k !== 'constructor' && k !== 'prototype') {
+            kv[k] = pair.slice(eq + 1);
+          }
+        }
+      });
+
+      const id = generateCartId('cart');
+      const createdAt = Date.now();
+
+      if (typeCode === 'G') {
+        return sanitizeCartridge({
+          id,
+          type: 'gradient',
+          name,
+          createdAt,
+          payload: {
+            tool: 'gradient',
+            mode: kv.m || 'find_grad',
+            il1: parseFloat(kv.il1),
+            il2: parseFloat(kv.il2),
+            len: parseFloat(kv.l),
+            gradVal: parseFloat(kv.g),
+            gradUnit: kv.gu || 'ratio',
+            gradDir: kv.d || 'fall'
+          }
+        });
+      }
+
+      if (typeCode === 'I') {
+        return sanitizeCartridge({
+          id,
+          type: 'interp',
+          name,
+          createdAt,
+          payload: {
+            tool: 'interp',
+            x1: parseFloat(kv.x1),
+            y1: parseFloat(kv.y1),
+            x2: parseFloat(kv.x2),
+            y2: parseFloat(kv.y2),
+            tgt: parseFloat(kv.t),
+            solve: kv.s || 'y'
+          }
+        });
+      }
+
+      if (typeCode === 'C') {
+        return sanitizeCartridge({
+          id,
+          type: 'chainage',
+          name,
+          createdAt,
+          payload: {
+            tool: 'chainage',
+            sc: parseFloat(kv.sc),
+            sl: parseFloat(kv.sl),
+            ec: parseFloat(kv.ec),
+            el: parseFloat(kv.el),
+            iv: parseFloat(kv.iv),
+            ex: safeDecodeURIComponent(kv.ex || '')
+          }
+        });
+      }
+
+      if (typeCode === 'L') {
+        const rows = (kv.r || '').split(';').filter(Boolean).slice(0, MAX_BENCH_ROWS).map(chunk => {
+          const [label, staff, design] = chunk.split(':');
+          return { label: label || '', staff: staff || '', design: design || '' };
+        });
+        return sanitizeCartridge({
+          id,
+          type: 'bench',
+          name,
+          createdAt,
+          payload: {
+            tool: 'bench',
+            tbm: parseFloat(kv.tbm),
+            bs: parseFloat(kv.bs),
+            rows: rows.length ? rows : [{ label: 'PT-1', staff: '', design: '' }]
+          }
+        });
+      }
+
+      throw new Error('Unsupported cartridge type code: ' + typeCode);
+    }
+
+    function buildSummary(type, p) {
+      if (type === 'gradient') {
+        const items = [];
+        if (Number.isFinite(p.il1)) items.push(`IL1 ${p.il1.toFixed(3)}m`);
+        if (Number.isFinite(p.il2)) items.push(`IL2 ${p.il2.toFixed(3)}m`);
+        if (Number.isFinite(p.len)) items.push(`L ${p.len.toFixed(1)}m`);
+        if (p.mode === 'find_grad' && Number.isFinite(p.il1) && Number.isFinite(p.il2) && p.len > 0) {
+          const dh = p.il2 - p.il1;
+          const ratio = Math.abs(dh) > 1e-9 ? `1:${Math.abs(p.len / dh).toFixed(1)}` : 'FLAT';
+          items.push(`${ratio} ${dh < 0 ? 'FALL' : dh > 0 ? 'RISE' : ''}`.trim());
+        } else if (Number.isFinite(p.gradVal)) {
+          items.push(p.gradUnit === 'ratio' ? `1:${p.gradVal}` : `${p.gradVal}%`);
+        }
+        return items;
+      }
+      if (type === 'interp') {
+        return [`P1(${p.x1},${p.y1})`, `P2(${p.x2},${p.y2})`, `${p.solve === 'y' ? 'X' : 'Y'}=${p.tgt}`];
+      }
+      if (type === 'chainage') {
+        const run = Math.abs(p.ec - p.sc);
+        const pct = run > 0 ? ((p.el - p.sl) / run) * 100 : 0;
+        return [`Ch ${p.sc}→${p.ec}`, `${p.sl}→${p.el}m`, `Step ${p.iv}m`, `${pct >= 0 ? '+' : ''}${pct.toFixed(2)}%`];
+      }
+      if (type === 'bench') {
+        const hpc = (Number.isFinite(p.tbm) && Number.isFinite(p.bs)) ? (p.tbm + p.bs).toFixed(3) : '—';
+        return [`TBM ${p.tbm}m`, `BS ${p.bs}m`, `HPC ${hpc}m`, `${(p.rows || []).length} pts`];
+      }
+      return [];
+    }
+
+    function captureToolState(tool) {
+      if (tool === 'gradient') {
+        const p = {
+          tool: 'gradient',
+          mode: state.gradMode,
+          il1: parseFloat(document.getElementById('g_il1').value) || 0,
+          il2: parseFloat(document.getElementById('g_il2').value) || 0,
+          len: parseFloat(document.getElementById('g_len').value) || 0,
+          gradVal: parseFloat(document.getElementById('g_gradVal').value) || 100,
+          gradUnit: state.gradUnit,
+          gradDir: state.gradDir
+        };
+        const defName = `Drain ${p.il1.toFixed(2)}→${p.il2.toFixed(2)} L=${p.len}m`;
+        return { type: 'gradient', defaultName: defName, payload: p };
+      }
+      if (tool === 'interp') {
+        const p = {
+          tool: 'interp',
+          x1: parseFloat(document.getElementById('i_x1').value) || 0,
+          y1: parseFloat(document.getElementById('i_y1').value) || 0,
+          x2: parseFloat(document.getElementById('i_x2').value) || 0,
+          y2: parseFloat(document.getElementById('i_y2').value) || 0,
+          tgt: parseFloat(document.getElementById('i_target').value) || 0,
+          solve: state.interpSolve
+        };
+        return { type: 'interp', defaultName: `Interp ${p.x1}→${p.x2} @ ${p.tgt}`, payload: p };
+      }
+      if (tool === 'chainage') {
+        const p = {
+          tool: 'chainage',
+          sc: parseFloat(document.getElementById('c_sc').value) || 0,
+          sl: parseFloat(document.getElementById('c_sl').value) || 0,
+          ec: parseFloat(document.getElementById('c_ec').value) || 0,
+          el: parseFloat(document.getElementById('c_el').value) || 0,
+          iv: parseFloat(document.getElementById('c_iv').value) || 10,
+          ex: (document.getElementById('c_extra').value || '').trim()
+        };
+        return { type: 'chainage', defaultName: `Profile Ch ${p.sc} to ${p.ec}`, payload: p };
+      }
+      // bench leveling
+      const p = {
+        tool: 'bench',
+        tbm: parseFloat(document.getElementById('l_tbm').value) || 0,
+        bs: parseFloat(document.getElementById('l_bs').value) || 0,
+        rows: state.levelRows.map(r => ({ label: r.label, staff: r.staff, design: r.design }))
+      };
+      return { type: 'bench', defaultName: `Level Check TBM ${p.tbm.toFixed(2)}`, payload: p };
+    }
+
+    function openFlashModal(tool) {
+      const snap = captureToolState(tool);
+      state.pendingFlashTool = snap;
+      const input = document.getElementById('flashNameInput');
+      input.value = snap.defaultName.slice(0, 40);
+      updateFlashPreview();
+      input.oninput = updateFlashPreview;
+      document.getElementById('modalFlash').classList.add('open');
+      setTimeout(() => input.focus(), 50);
+    }
+
+    function updateFlashPreview() {
+      if (!state.pendingFlashTool) return;
+      const name = document.getElementById('flashNameInput').value.trim() || state.pendingFlashTool.defaultName;
+      const code = encodeCartridgeString({
+        type: state.pendingFlashTool.type,
+        name,
+        payload: state.pendingFlashTool.payload
+      });
+      const bytes = getUTF8ByteLength(code);
+      document.getElementById('flashPayloadPreview').textContent = code;
+      const statusText = bytes <= QR_MAX_BYTES_M
+        ? `${bytes} bytes (QR EC-M OK)`
+        : bytes <= QR_MAX_BYTES_L
+          ? `${bytes} bytes (QR EC-L FALLBACK)`
+          : `${bytes} bytes (EXCEEDS 271B QR LIMIT)`;
+      document.getElementById('flashByteCount').textContent = statusText;
+    }
+
+    function confirmFlashCartridge() {
+      if (!state.pendingFlashTool) return;
+      const name = (document.getElementById('flashNameInput').value.trim() || state.pendingFlashTool.defaultName).slice(0, 40);
+      const cart = sanitizeCartridge({
+        id: generateCartId('cart'),
+        type: state.pendingFlashTool.type,
+        name,
+        createdAt: Date.now(),
+        payload: state.pendingFlashTool.payload
+      });
+      if (!cart) {
+        showToast('Unable to flash invalid cartridge state.', 'danger');
+        return;
+      }
+      state.cartridges.unshift(cart);
+      if (state.cartridges.length > MAX_CARTRIDGES) {
+        state.cartridges.length = MAX_CARTRIDGES;
+      }
+      saveCartridges();
+      renderCartridges();
+      closeModal('modalFlash');
+      showToast(`Flashed "${name}" to QR Cartridge`, 'amber');
+      openInspector(cart.id);
+    }
+
+    function applyCartridgeToCalculator(cart) {
+      const p = cart.payload;
+      if (cart.type === 'gradient') {
+        switchTab('gradient');
+        if (Number.isFinite(p.il1)) document.getElementById('g_il1').value = p.il1;
+        if (Number.isFinite(p.il2)) document.getElementById('g_il2').value = p.il2;
+        if (Number.isFinite(p.len)) document.getElementById('g_len').value = p.len;
+        if (Number.isFinite(p.gradVal)) document.getElementById('g_gradVal').value = p.gradVal;
+        state.gradUnit = p.gradUnit || 'ratio';
+        state.gradDir = p.gradDir || 'fall';
+        document.getElementById('btnGradUnitRatio').classList.toggle('active', state.gradUnit === 'ratio');
+        document.getElementById('btnGradUnitPct').classList.toggle('active', state.gradUnit === 'pct');
+        document.getElementById('g_gradUnitLabel').textContent = state.gradUnit === 'ratio' ? '1 : X' : '%';
+        document.getElementById('g_gradPrefix').textContent = state.gradUnit === 'ratio' ? '1 :' : '%';
+        document.getElementById('btnGradDirFall').classList.toggle('active', state.gradDir === 'fall');
+        document.getElementById('btnGradDirRise').classList.toggle('active', state.gradDir === 'rise');
+        setGradMode(p.mode || 'find_grad');
+      } else if (cart.type === 'interp') {
+        switchTab('interp');
+        setInterpSubMode('linear');
+        document.getElementById('i_x1').value = p.x1;
+        document.getElementById('i_y1').value = p.y1;
+        document.getElementById('i_x2').value = p.x2;
+        document.getElementById('i_y2').value = p.y2;
+        document.getElementById('i_target').value = p.tgt;
+        setInterpSolve(p.solve || 'y');
+      } else if (cart.type === 'chainage') {
+        switchTab('interp');
+        setInterpSubMode('chainage');
+        document.getElementById('c_sc').value = p.sc;
+        document.getElementById('c_sl').value = p.sl;
+        document.getElementById('c_ec').value = p.ec;
+        document.getElementById('c_el').value = p.el;
+        document.getElementById('c_iv').value = p.iv;
+        document.getElementById('c_extra').value = p.ex || '';
+        calcChainageProfile();
+      } else if (cart.type === 'bench') {
+        switchTab('bench');
+        setBenchSubMode('level');
+        document.getElementById('l_tbm').value = p.tbm;
+        document.getElementById('l_bs').value = p.bs;
+        state.levelRows = (p.rows || []).map(r => ({ label: r.label, staff: r.staff, design: r.design }));
+        renderLevelRows();
+      }
+      showToast(`Loaded "${cart.name}"`, 'cyan');
+    }
+
+    function setCartFilter(f) {
+      state.cartFilter = f;
+      document.querySelectorAll('#cartFilterPills .mode-pill').forEach(btn => {
+        btn.classList.toggle('active-amber', btn.dataset.filter === f);
+      });
+      renderCartridges();
+    }
+
+    function formatShortTime(ts) {
+      try {
+        const d = new Date(ts);
+        return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' ' +
+               d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+      } catch (e) {
+        return '';
+      }
+    }
+
+    function getTypeMeta(type) {
+      if (type === 'gradient') return { label: 'GRADIENT', tagClass: 'tag-amber', color: '#f59e0b' };
+      if (type === 'interp') return { label: 'LINEAR INTERP', tagClass: 'tag-cyan', color: '#06b6d4' };
+      if (type === 'chainage') return { label: 'CHAINAGE', tagClass: 'tag-cyan', color: '#06b6d4' };
+      return { label: 'SITE BENCH', tagClass: 'tag-emerald', color: '#10b981' };
+    }
+
+    function buildCartCardHTML(cart) {
+      const safeType = ALLOWED_CART_TYPES.has(cart.type) ? cart.type : 'bench';
+      const meta = getTypeMeta(safeType);
+      const pills = (cart.summary || []).map(m => `<span class="cart-metric-pill">${escHtml(m)}</span>`).join('');
+      return `
+        <div class="cart-card type-${safeType}" data-cart-id="${escHtml(cart.id)}" tabindex="0" role="button">
+          <div class="cart-grip" aria-hidden="true"><span></span><span></span><span></span></div>
+          <span class="tag-chip ${meta.tagClass}">${meta.label}</span>
+          <div class="cart-title">${escHtml(cart.name)}</div>
+          <div class="cart-metrics">${pills}</div>
+          <div class="cart-foot">
+            <span>QR CARTRIDGE</span>
+            <span>${formatShortTime(cart.createdAt)}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCartridges() {
+      document.getElementById('tabCartCount').textContent = state.cartridges.length;
+
+      // Studio Dock (shows latest 8 cartridges)
+      const dockEl = document.getElementById('dockCartList');
+      if (state.cartridges.length === 0) {
+        dockEl.innerHTML = `<div class="mono" style="font-size:12px; color:var(--text-muted); padding:14px; text-align:center; border:1px dashed var(--border-subtle); border-radius:8px;">No cartridges flashed yet.</div>`;
+      } else {
+        dockEl.innerHTML = state.cartridges.slice(0, 8).map(buildCartCardHTML).join('');
+      }
+
+      // Full Bay with Filter & Search
+      const q = (document.getElementById('cartSearch').value || '').trim().toLowerCase();
+      const filtered = state.cartridges.filter(c => {
+        const f = state.cartFilter;
+        const typeMatch = f === 'all' ||
+          (f === 'gradient' && c.type === 'gradient') ||
+          (f === 'interp' && (c.type === 'interp' || c.type === 'chainage')) ||
+          (f === 'bench' && c.type === 'bench');
+        const textMatch = !q || c.name.toLowerCase().includes(q) || (c.summary || []).join(' ').toLowerCase().includes(q);
+        return typeMatch && textMatch;
+      });
+
+      const bayEl = document.getElementById('bayCartGrid');
+      if (filtered.length === 0) {
+        bayEl.innerHTML = `<div class="mono" style="font-size:12px; color:var(--text-muted); padding:20px; text-align:center; border:1px dashed var(--border-subtle); border-radius:8px; grid-column:1/-1;">No matching cartridges found.</div>`;
+      } else {
+        bayEl.innerHTML = filtered.map(buildCartCardHTML).join('');
+      }
+    }
+
+    /* ========================================================================
+       PART 8: CARTRIDGE INSPECTOR, PNG SPEC CARD EXPORT & CAMERA SCANNER
+       ======================================================================== */
+    function openInspector(cartId) {
+      const cart = state.cartridges.find(c => c.id === cartId);
+      if (!cart) return;
+
+      state.inspectedCartId = cartId;
+      state.deleteArmedId = null;
+      const delBtn = document.getElementById('btnInspDelete');
+      delBtn.textContent = 'DELETE CARTRIDGE';
+
+      const meta = getTypeMeta(cart.type);
+      const tagEl = document.getElementById('inspTypeTag');
+      tagEl.className = 'tag-chip ' + meta.tagClass;
+      tagEl.textContent = meta.label;
+
+      document.getElementById('inspTitle').textContent = cart.name;
+      document.getElementById('inspTimestamp').textContent = formatShortTime(cart.createdAt);
+      document.getElementById('inspMetrics').innerHTML = (cart.summary || [])
+        .map(m => `<span class="cart-metric-pill">${escHtml(m)}</span>`).join('');
+
+      const codeStr = encodeCartridgeString(cart);
+      document.getElementById('inspCodeText').textContent = codeStr;
+
+      try {
+        const qr = PureQR.encode(codeStr, 'M');
+        PureQR.renderToCanvas(document.getElementById('qrCanvas'), qr, 320, '#0b0f17', '#ffffff');
+        document.getElementById('inspQrMeta').textContent =
+          `ISO/IEC 18004 // V${qr.version} (${qr.size}×${qr.size}) // EC-${qr.ecLevel} // ${qr.byteLength} BYTES`;
+      } catch (err) {
+        document.getElementById('inspQrMeta').textContent = 'QR ENCODE ERROR: ' + err.message;
+      }
+
+      document.getElementById('modalInspector').classList.add('open');
+    }
+
+    function loadInspectedCartridge() {
+      const cart = state.cartridges.find(c => c.id === state.inspectedCartId);
+      if (!cart) return;
+      closeModal('modalInspector');
+      applyCartridgeToCalculator(cart);
+    }
+
+    function copyInspectedCode() {
+      const code = document.getElementById('inspCodeText').textContent;
+      copyTextSafe(code, 'Copied Cartridge Code');
+    }
+
+    function deleteInspectedCartridge() {
+      const id = state.inspectedCartId;
+      if (!id) return;
+      // 2-click inline confirmation (no window.confirm)
+      if (state.deleteArmedId !== id) {
+        state.deleteArmedId = id;
+        document.getElementById('btnInspDelete').textContent = 'CONFIRM DELETE?';
+        return;
+      }
+      state.cartridges = state.cartridges.filter(c => c.id !== id);
+      saveCartridges();
+      renderCartridges();
+      closeModal('modalInspector');
+      showToast('Cartridge deleted', 'danger');
+    }
+
+    // Export a crisp, printable high-DPI Engineering Spec QR Card PNG
+    function downloadQRCardPNG() {
+      const cart = state.cartridges.find(c => c.id === state.inspectedCartId);
+      if (!cart) return;
+      const codeStr = encodeCartridgeString(cart);
+      let qr;
+      try {
+        qr = PureQR.encode(codeStr, 'M');
+      } catch (err) {
+        showToast('QR export failed: ' + err.message, 'danger');
+        return;
+      }
+      const meta = getTypeMeta(cart.type);
+
+      const card = document.createElement('canvas');
+      card.width = 640;
+      card.height = 840;
+      const ctx = card.getContext('2d');
+
+      // Card background
+      ctx.fillStyle = '#0f1318';
+      ctx.fillRect(0, 0, card.width, card.height);
+
+      // Outer border
+      ctx.strokeStyle = meta.color;
+      ctx.lineWidth = 8;
+      ctx.strokeRect(16, 16, card.width - 32, card.height - 32);
+
+      // Header band
+      ctx.fillStyle = meta.color;
+      ctx.fillRect(20, 20, card.width - 40, 68);
+      ctx.fillStyle = '#090d12';
+      ctx.font = 'bold 24px monospace';
+      ctx.fillText(`FIELD-CART // ${meta.label}`, 40, 62);
+
+      // Title
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = 'bold 26px monospace';
+      ctx.fillText(cart.name.slice(0, 32), 40, 134);
+
+      // Metrics line
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '18px monospace';
+      ctx.fillText((cart.summary || []).join('  |  ').slice(0, 48), 40, 168);
+
+      // Render crisp QR into white plate
+      const qrTemp = document.createElement('canvas');
+      PureQR.renderToCanvas(qrTemp, qr, 440, '#0b0f17', '#ffffff');
+      const qrX = Math.floor((card.width - 460) / 2);
+      const qrY = 198;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(qrX, qrY, 460, 460);
+      const imgX = qrX + Math.floor((460 - qrTemp.width) / 2);
+      const imgY = qrY + Math.floor((460 - qrTemp.height) / 2);
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(qrTemp, imgX, imgY);
+
+      // Footer metadata
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = 'bold 16px monospace';
+      ctx.fillText(`QR V${qr.version} EC-${qr.ecLevel}  //  ${formatShortTime(cart.createdAt)}`, 40, 706);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = '13px monospace';
+      const line1 = codeStr.slice(0, 62);
+      const line2 = codeStr.slice(62, 124);
+      ctx.fillText(line1, 40, 740);
+      if (line2) ctx.fillText(line2, 40, 760);
+
+      ctx.fillStyle = meta.color;
+      ctx.font = 'bold 13px monospace';
+      ctx.fillText('SCAN WITH PHONE OR IMPORT INTO FIELD-CART OS (100% OFFLINE)', 40, 790);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = '11px monospace';
+      ctx.fillText('© 2026 NazreenNasyuha — FIELD-CART OS', 40, 812);
+
+      const link = document.createElement('a');
+      const safeName = cart.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 32);
+      link.download = `field-cart-${safeName || 'qr'}.png`;
+      link.href = card.toDataURL('image/png');
+      link.click();
+      showToast('Downloaded QR Spec Card (PNG)', 'cyan');
+    }
+
+    /* ========================================================================
+       PART 9: LOAD / SCAN MODAL & NATIVE BARCODEDETECTOR CAMERA SCANNER
+       ======================================================================== */
+    function openLoadScanModal() {
+      document.getElementById('pasteCodeInput').value = '';
+      document.getElementById('modalLoadScan').classList.add('open');
+    }
+
+    function closeLoadScanModal() {
+      stopCameraScanner();
+      closeModal('modalLoadScan');
+    }
+
+    function decodeAndLoadPasted(saveToBay) {
+      const raw = document.getElementById('pasteCodeInput').value;
+      try {
+        const cart = decodeCartridgeString(raw);
+        if (saveToBay) {
+          state.cartridges.unshift(cart);
+          saveCartridges();
+          renderCartridges();
+        }
+        closeLoadScanModal();
+        applyCartridgeToCalculator(cart);
+      } catch (err) {
+        showToast(err.message, 'danger');
+      }
+    }
+
+    async function toggleCameraScanner() {
+      if (state.camStream) {
+        stopCameraScanner();
+        return;
+      }
+      const statusEl = document.getElementById('camStatusText');
+      if (!('BarcodeDetector' in window)) {
+        statusEl.textContent = 'Native BarcodeDetector API is not supported in this browser. Scan the QR card with your phone camera, copy the text, and paste it above.';
+        showToast('Camera QR API not supported here — use Paste.', 'amber');
+        return;
+      }
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        statusEl.textContent = 'Camera access requires HTTPS or localhost. Use Paste above to load cartridges.';
+        return;
+      }
+      try {
+        const detector = new window.BarcodeDetector({ formats: ['qr_code'] });
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        state.camStream = stream;
+        const video = document.getElementById('camVideo');
+        video.srcObject = stream;
+        await video.play();
+        document.getElementById('cameraWrap').classList.remove('hidden');
+        document.getElementById('btnToggleCam').textContent = '■ STOP CAMERA';
+        statusEl.textContent = 'Scanning... center a FIELD-CART QR code in the viewfinder.';
+
+        const scanFrame = async () => {
+          if (!state.camStream) return;
+          try {
+            const codes = await detector.detect(video);
+            if (codes && codes.length > 0) {
+              const rawVal = codes[0].rawValue;
+              document.getElementById('pasteCodeInput').value = rawVal;
+              stopCameraScanner();
+              showToast('QR Code detected!', 'emerald');
+              decodeAndLoadPasted(true);
+              return;
+            }
+          } catch (e) {}
+          state.camScanLoopId = requestAnimationFrame(scanFrame);
+        };
+        state.camScanLoopId = requestAnimationFrame(scanFrame);
+      } catch (err) {
+        statusEl.textContent = 'Camera access denied or unavailable: ' + err.message;
+        showToast('Could not start camera.', 'danger');
+      }
+    }
+
+    function stopCameraScanner() {
+      if (state.camScanLoopId) {
+        cancelAnimationFrame(state.camScanLoopId);
+        state.camScanLoopId = null;
+      }
+      if (state.camStream) {
+        state.camStream.getTracks().forEach(t => t.stop());
+        state.camStream = null;
+      }
+      const wrap = document.getElementById('cameraWrap');
+      if (wrap) wrap.classList.add('hidden');
+      const btn = document.getElementById('btnToggleCam');
+      if (btn) btn.textContent = '📷 START CAMERA SCAN';
+    }
+
+    /* ========================================================================
+       PART 10: OFFLINE STANDALONE HTML & JSON BACKUP EXPORT / IMPORT
+       ======================================================================== */
+    function openOfflineModal() {
+      document.getElementById('modalOffline').classList.add('open');
+    }
+
+    function downloadStandaloneHTML() {
+      const manifestEl = document.getElementById('dynamicManifest');
+      const prevHref = manifestEl ? manifestEl.getAttribute('href') : '';
+      try {
+        // Close modals and strip transient runtime blob manifest URL before serializing
+        closeModal('modalOffline');
+        if (manifestEl) manifestEl.setAttribute('href', '');
+        const htmlDoc = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+        if (manifestEl && prevHref) manifestEl.setAttribute('href', prevHref);
+        const blob = new Blob([htmlDoc], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'field-cart-studio-offline.html';
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        showToast('Saved standalone offline HTML!', 'emerald');
+      } catch (e) {
+        if (manifestEl && prevHref) manifestEl.setAttribute('href', prevHref);
+        showToast('Export failed: ' + e.message, 'danger');
+      }
+    }
+
+    function exportCartridgesJSON() {
+      const payload = {
+        app: 'FIELD-CART OS',
+        version: '1.0',
+        copyright: 'Copyright (c) 2026 NazreenNasyuha. All rights reserved.',
+        exportedAt: new Date().toISOString(),
+        cartridges: state.cartridges
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `field-cart-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showToast(`Exported ${state.cartridges.length} cartridges`, 'cyan');
+    }
+
+    function importCartridgesJSON(ev) {
+      const file = ev.target.files && ev.target.files[0];
+      if (!file) return;
+      if (file.size > MAX_IMPORT_BYTES) {
+        showToast('Import rejected: file exceeds 2 MB safety limit.', 'danger');
+        ev.target.value = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(reader.result);
+          const list = Array.isArray(parsed) ? parsed : (parsed && Array.isArray(parsed.cartridges) ? parsed.cartridges : null);
+          if (!list) throw new Error('Invalid backup format.');
+          let added = 0;
+          let skipped = 0;
+          const existingIds = new Set(state.cartridges.map(c => c.id));
+          list.slice(0, MAX_IMPORT_ITEMS).forEach(item => {
+            const clean = sanitizeCartridge(item);
+            if (clean) {
+              if (existingIds.has(clean.id)) clean.id = generateCartId('imp');
+              existingIds.add(clean.id);
+              state.cartridges.unshift(clean);
+              added++;
+            } else {
+              skipped++;
+            }
+          });
+          if (state.cartridges.length > MAX_CARTRIDGES) {
+            state.cartridges.length = MAX_CARTRIDGES;
+          }
+          saveCartridges();
+          renderCartridges();
+          closeModal('modalOffline');
+          const msg = skipped > 0
+            ? `Imported ${added} cartridges (${skipped} invalid skipped)`
+            : `Imported ${added} cartridges!`;
+          showToast(msg, added > 0 ? 'emerald' : 'amber');
+        } catch (err) {
+          showToast('Import failed: ' + err.message, 'danger');
+        }
+        ev.target.value = '';
+      };
+      reader.readAsText(file);
+    }
+
+    /* ========================================================================
+       PART 11: INITIALIZATION & EVENT WIRING
+       ======================================================================== */
+    function handleCartridgeContainerInteraction(e) {
+      const card = e.target.closest('.cart-card[data-cart-id]');
+      if (!card) return;
+      if (e.type === 'keydown') {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+      }
+      openInspector(card.dataset.cartId);
+    }
+
+    function initApp() {
+      loadStorage();
+      injectInlineManifest();
+      setTheme(state.theme);
+      setLayoutMode(state.layout);
+      updateOnlineStatus();
+
+      window.addEventListener('online', updateOnlineStatus);
+      window.addEventListener('offline', updateOnlineStatus);
+
+      // Delegated cartridge card selection (prevents inline JS injection + enables keyboard access)
+      ['dockCartList', 'bayCartGrid'].forEach(containerId => {
+        const el = document.getElementById(containerId);
+        if (el) {
+          el.addEventListener('click', handleCartridgeContainerInteraction);
+          el.addEventListener('keydown', handleCartridgeContainerInteraction);
+        }
+      });
+
+      // Close modals on backdrop click or Escape key
+      document.querySelectorAll('.modal-backdrop').forEach(bd => {
+        bd.addEventListener('click', e => {
+          if (e.target === bd) {
+            if (bd.id === 'modalLoadScan') closeLoadScanModal();
+            else bd.classList.remove('open');
+          }
+        });
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          closeLoadScanModal();
+          ['modalFlash', 'modalInspector', 'modalOffline'].forEach(closeModal);
+        }
+      });
+
+      // Run initial live calculations across all tools
+      setGradMode('find_grad');
+      calcLinearInterp();
+      calcChainageProfile();
+      renderLevelRows();
+      calcVolume();
+      renderCartridges();
+    }
+
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
